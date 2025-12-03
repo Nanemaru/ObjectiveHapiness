@@ -101,7 +101,7 @@ public class Character : MonoBehaviour
         return false;
     }
 
-    int growOld(age)
+    int growOld(int age)
     {
         return age++;
     }
