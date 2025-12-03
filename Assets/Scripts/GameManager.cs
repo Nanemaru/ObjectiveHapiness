@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private float _numberSecondOfDay = 0f;
     private int _numberDay = 1;
     private bool _isOnPlay = true; //Value to use to put game in resume
+    private float _numberSecondBeforeBirth;
     
     //Define how much resource there is in game
     private static int _numberFood = 0; 
@@ -20,16 +21,28 @@ public class GameManager : MonoBehaviour
     //Canvas management
         //Resources Text
         [SerializeField] private TextMeshProUGUI[] resourcesTextArray = new TextMeshProUGUI[3];
+        
+        
+    //PNJ
+    [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //Put wanderer in first
+    private List<Character> _numberPnjOnGame = new List<Character>();
+
+    private enum Job {farmer, lumberjack, miner, mason};
+    //Buildings
+    private List<GameObject> homes = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateTimeAndDay();
+        while (_isOnPlay)
+        {
+            UpdateTimeAndDay();
+        }
     }
 
     private void WinGame() //Function call when prosperity reach 100%
@@ -45,6 +58,10 @@ public class GameManager : MonoBehaviour
     {
         _numberSecondOfDay = 0f;
         _numberDay++;
+        foreach (Character character in _numberPnjOnGame)
+        {
+            //Function who age up pnj
+        }
     }
 
     public void UpdateProsperity(float value) //Function call to update prosperity with positive or negative value
@@ -56,6 +73,7 @@ public class GameManager : MonoBehaviour
     public void Resume() //Put game from play to resume and vice versa
     {
         _isOnPlay = !_isOnPlay;
+        //Change sprite
     }
 
     private void UpdateResourcesText()
@@ -70,5 +88,25 @@ public class GameManager : MonoBehaviour
     {
         _numberSecondOfDay  += Time.deltaTime;
         if (_numberSecondOfDay > _dayDuration) NextDay();
+    }
+
+
+    private void CreateBuilding(GameObject building)
+    {
+        
+    }
+
+    private void CreateHome(GameObject home)
+    {
+        //Instantiate Home
+        homes.Add(home);
+    }
+
+    private void CreatePNJ()
+    {
+        /*GameObject pnj = Instantiate()
+         _charactersList.Add(pnj);
+         pnj.job = wanderer;
+         */
     }
 }
