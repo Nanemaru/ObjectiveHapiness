@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     public Transform farm;
     public Transform forest;
     public Transform mine;
+    public Transform construct = null;
     public int age = 0;
     private NavMeshAgent agent;
     public float range; //radius of sphere
@@ -26,7 +27,7 @@ public class Character : MonoBehaviour
     }
     void Update()
     {
-        if (Hunger == true)
+        if (Hunger == true || age == deathage)
         {
                 Destroy(gameObject);
         }
@@ -62,6 +63,10 @@ public class Character : MonoBehaviour
                             agent.SetDestination(point);
                         }
                     }
+                    if (construct != null)
+                    {
+                        agent.SetDestination(construct.position);
+                    }
                     break;
             }
         }
@@ -76,10 +81,6 @@ public class Character : MonoBehaviour
                     agent.SetDestination(point);
                 }
             }
-        }
-        if (age == deathage)
-        {
-            Destroy(gameObject);
         }
     }
 
@@ -98,5 +99,10 @@ public class Character : MonoBehaviour
 
         result = Vector3.zero;
         return false;
+    }
+
+    int growOld(age)
+    {
+        return age++;
     }
 }
