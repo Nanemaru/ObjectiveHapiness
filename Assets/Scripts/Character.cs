@@ -18,11 +18,20 @@ public class Character : MonoBehaviour
     private bool Hunger = false;
     private bool Tired = false;
     private bool Joy = true;
+    private bool Home = false;
     private int deathage;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         deathage = Random.Range(8, 12);
+        for (int i = 0; i < GameManager.homeList.Count;i++)
+        {
+            if (GameManager.homeList[i] > 0)
+            {
+                Home = true;
+                GameManager.homeList[i]--;
+            }
+        }
 
     }
     void Update()
