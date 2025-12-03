@@ -9,16 +9,23 @@ public class Character : MonoBehaviour
     public string job;
     public int year;
     private NavMeshAgent agent;
-    private enum State {Yes,No}
-    private State Hunger = State.No;
-    private State Tired = State.No;
+    private bool Hunger = false;
+    private bool Tired = false;
+    private bool Joy = true;
 
     void Start()
     {
-        
+        agent = GetComponent<NavMeshAgent>();
     }
     void Update()
     {
-        
+        if (Hunger == false)
+        {
+                Destroy(gameObject);
+        }
+        if (Tired == false)
+        {
+            Joy = false;
+        }
     }
 }
