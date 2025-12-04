@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     //Time management
-    private float _prosperity = 5f;
+    public float _prosperity = 5f;
     private float _dayDuration = 5f; //Set the duration in seconds of a day 
     private float _numberSecondOfDay = 0f;
     private int _numberDay = 1;
@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private static int _numberFood = 0; 
     private static int _numberWood = 0;
     private static int _numberStone = 0;
+    public float foodMultiplicator = 1;
     private int[] _resourcesIntArray = new int[3] { _numberFood, _numberWood, _numberStone };
     //Canvas management
         [SerializeField] private TextMeshProUGUI[] resourcesTextArray = new TextMeshProUGUI[3];
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     private enum Job {farmer, lumberjack, miner, mason};
     //Buildings
-    public List<GameObject> homes = new List<GameObject>();
+    public int homes = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -112,7 +113,7 @@ public class GameManager : MonoBehaviour
     private void CreateHome(GameObject home)
     {
         Instantiate(home);
-        homes.Add(home);
+        homes += 4;
     }
 
     private void CreatePnj()
