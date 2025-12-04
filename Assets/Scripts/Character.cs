@@ -23,13 +23,13 @@ public class Character : MonoBehaviour
     private Transform _homePosition;
     private int _deathage;
     
-    [SerializeField] private GameManager gameManager;
+    private GameManager gameManager;
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _deathage = Random.Range(8, 12);
         CheckAHomeAvailable();
-
+        gameManager = FindObjectOfType<GameManager>();
     }
     void Update()
     {
@@ -136,9 +136,14 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void PnjTired()
+    public void PnjTired() //Function when PnjTired
     {
         _tired = true;
-        _agent.SetDestination(_homePosition.position);
+        if (!_home)
+        {
+            CheckAHomeAvailable();
+        }
+        if (_home) _agent.SetDestination(_homePosition.position);
+        
     }
 }
