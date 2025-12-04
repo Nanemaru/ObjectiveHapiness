@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         
     //PNJ
     [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //Put wanderer in first
-    private List<Character> _numberPnjOnGame = new List<Character>();
+    public List<GameObject> _numberPnjOnGame = new List<GameObject>();
 
     private enum Job {farmer, lumberjack, miner, mason};
     //Buildings
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     {
         _numberSecondOfDay = 0f;
         _numberDay++;
-        foreach (Character character in _numberPnjOnGame)
+        foreach (GameObject character in _numberPnjOnGame)
         {
             //Function who age up pnj
         }
