@@ -14,7 +14,15 @@ public class HomeClass : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            
+            other.GetComponent<Renderer>().enabled = false;
+        }
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            other.GetComponent<Renderer>().enabled = false;
         }
     }
 }

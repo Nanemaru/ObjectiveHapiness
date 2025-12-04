@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Character : MonoBehaviour
 {
-    public string job;
+    public string job = "wanderer";
     public Transform farm;
     public Transform forest;
     public Transform mine;
@@ -14,34 +14,40 @@ public class Character : MonoBehaviour
     public bool hunger = false;
     private bool _tired = false;
     public bool isOccupied = false;
-    private bool _joy = true;
     private bool _home = false;
     private Transform _homePosition;
-    private int _deathage;
-    private Vector3 destinationWhenResume;
-    private GameManager gameManager;
+    private int _ageOfDeath;
+    private Vector3 _destinationWhenResume;
+    private GameManager _gameManager;
+    public int resourcesToGive = 0;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        _deathage = Random.Range(8, 12);
+        _ageOfDeath = Random.Range(8, 12);
         CheckAHomeAvailable();
-        gameManager = FindObjectOfType<GameManager>();
+        _gameManager = FindObjectOfType<GameManager>();
+        SetupAgent(job);
     }
     void Update()
     {
-        if (!_tired && !isOccupied)
+        if (agent.remainingDistance <= agent.stoppingDistance && !agent.isStopped)
         {
-            SetupAgent(job);
+            if (!isOccupied) MakePnjWander();
+            else
+            {
+                //Faire une animation ?
+                resourcesToGive += 3 * _gameManager.foodMultiplicator;
+            }
         }
-        else
+
+        if (_tired)
         {
-            _joy = false;
-            MakePnjWander();
+            PnjTired();
         }
     }
     private void CheckAHomeAvailable()
     {
-        foreach (var home in gameManager.homes)
+        foreach (var home in _gameManager.homes)
         {
             HomeClass actualHome = home.GetComponent<HomeClass>();
             if (actualHome.IsAvailable)
@@ -62,18 +68,29 @@ public class Character : MonoBehaviour
 
     public void CheckIfPnjStillAlive()
     {
-        if (hunger || age == _deathage)
+        if (hunger || age == _ageOfDeath)
         {
-            gameManager._numberPnjOnGame.Remove(gameObject.GetComponent<Character>());
+            _gameManager._numberPnjOnGame.Remove(gameObject.GetComponent<Character>());
             Destroy(gameObject);
         }
     }
 
     public void PnjTired() //Function when PnjTired
     {
-        _tired = true;
+        float prosperityToAdd;
         if (!_home) CheckAHomeAvailable();
-        if (_home) agent.SetDestination(_homePosition.position);
+        if (_home)
+        {
+            agent.SetDestination(_homePosition.position);
+            prosperityToAdd = 2f;
+            _tired = false;
+        }
+        else
+        {
+            prosperityToAdd = -0.1f;
+            MakePnjWander();
+        }
+        _gameManager.UpdateProsperity(prosperityToAdd);
         
     }
 

@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     private static int _numberFood = 0; 
     private static int _numberWood = 0;
     private static int _numberStone = 0;
-    public float foodMultiplicator = 1;
+    public int foodMultiplicator = 1;
     private int[] _resourcesIntArray = new int[3] { _numberFood, _numberWood, _numberStone };
     //Canvas management
         [SerializeField] private TextMeshProUGUI[] resourcesTextArray = new TextMeshProUGUI[3];
@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour
             }
         }
         //Instantiate(building, positionOfBuilding.position, building.transform.rotation); //Faire en sorte que ça se fasse au bout de X temps
+        //UpdateProsperity(); if Bookstore or Museum
     }
 
     private void CreateHome(GameObject home)
@@ -152,7 +153,6 @@ public class GameManager : MonoBehaviour
         GameObject newPnj = Instantiate(typeOfPnj[rand]);
         Character scriptNewPnj = newPnj.GetComponent<Character>();
         _numberPnjOnGame.Add(scriptNewPnj);
-        scriptNewPnj.job = "wanderer";
     }
 
     private void NourrishPnj()
@@ -174,5 +174,29 @@ public class GameManager : MonoBehaviour
             Character pnj = _numberPnjOnGame[rand].GetComponent<Character>();
             pnj.hunger = true;
         }
+    }
+
+    private void UpdateResources()
+    {
+        foreach (var character in _numberPnjOnGame)
+        {
+            switch (character.job)
+            {
+                case "farmer":
+                    _numberFood += character.resourcesToGive;
+                    break;
+                case "lumberjack":
+                    _numberWood +=  character.resourcesToGive;
+                    break;
+                case "miner":
+                    _numberStone  += character.resourcesToGive;
+                    break;
+            }
+        }
+    }
+
+    private void ResourceToUpdate(int resourceType, Character character)
+    {
+        resourceType +=character.resourcesToGive;
     }
 }
