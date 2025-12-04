@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,7 +10,7 @@ public class GameManager : MonoBehaviour
     private float _numberSecondOfDay = 0f;
     private int _numberDay = 1;
     private bool _isOnPlay = true; //Value to use to put game in resume
-    private float _numberSecondBeforeBirth;
+    private float _numberSecondBeforeBirth = 30f;
     
     //Define how much resource there is in game
     private static int _numberFood = 0; 
@@ -19,9 +18,8 @@ public class GameManager : MonoBehaviour
     private static int _numberStone = 0;
     private int[] _resourcesIntArray = new int[3] { _numberFood, _numberWood, _numberStone };
     //Canvas management
-        //Resources Text
         [SerializeField] private TextMeshProUGUI[] resourcesTextArray = new TextMeshProUGUI[3];
-        
+        [SerializeField] private TextMeshProUGUI dayCounter;
         
     //PNJ
     [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //Put wanderer in first
@@ -29,11 +27,11 @@ public class GameManager : MonoBehaviour
 
     private enum Job {farmer, lumberjack, miner, mason};
     //Buildings
-    private List<GameObject> homes = new List<GameObject>();
+    public List<GameObject> homes = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
-       
+       UpdateDayCounter();
     }
 
     // Update is called once per frame
@@ -58,9 +56,18 @@ public class GameManager : MonoBehaviour
     {
         _numberSecondOfDay = 0f;
         _numberDay++;
+        UpdatePnj();
+        UpdateDayCounter();
+    }
+
+    private void UpdatePnj()
+    {
         foreach (GameObject character in _numberPnjOnGame)
         {
-            //Function who age up pnj
+            Character pnj = character.GetComponent<Character>();
+            pnj.age++;
+            pnj.CheckIfPnjStillAlive();
+            pnj.PnjTired();
         }
     }
 
@@ -84,29 +91,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void UpdateDayCounter()
+    {
+        dayCounter.text = "Day " + _numberDay;
+    }
+
     private void UpdateTimeAndDay()
     {
         _numberSecondOfDay  += Time.deltaTime;
+        if (_numberSecondOfDay > _numberSecondBeforeBirth) CreatePnj();
         if (_numberSecondOfDay > _dayDuration) NextDay();
     }
 
 
-    private void CreateBuilding(GameObject building)
+    private void CreateBuilding(GameObject building, Transform positionOfBuilding)
     {
-        
+        Instantiate(building, positionOfBuilding.position, building.transform.rotation);
     }
 
     private void CreateHome(GameObject home)
     {
-        //Instantiate Home
+        Instantiate(home);
         homes.Add(home);
     }
 
-    private void CreatePNJ()
+    private void CreatePnj()
     {
-        /*GameObject pnj = Instantiate()
-         _charactersList.Add(pnj);
-         pnj.job = wanderer;
-         */
+        int rand =  Random.Range(0, typeOfPnj.Count - 1);
+        GameObject pnj = Instantiate(typeOfPnj[rand]);
+        _numberPnjOnGame.Add(pnj);
+        pnj.GetComponent<Character>().job = "wanderer";
     }
 }

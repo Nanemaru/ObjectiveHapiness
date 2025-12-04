@@ -12,82 +12,78 @@ public class Character : MonoBehaviour
     public Transform mine;
     public Transform construct = null;
     public int age = 0;
-    private NavMeshAgent agent;
+    private NavMeshAgent _agent;
     public float range; //radius of sphere
     public Transform centrePoint; //centre of the area the agent wants to move around in instead of centrePoint you can set it as the transform of the agent if you don't care about a specific area
-    private bool Hunger = false;
-    private bool Tired = false;
-    private bool Joy = true;
-    private bool Home = false;
-    private int deathage;
+    private bool _hunger = false;
+    private bool _tired = false;
+    private bool _isOccupied = false;
+    private bool _joy = true;
+    private bool _home = false;
+    private Transform _homePosition;
+    private int _deathage;
+    
+    [SerializeField] private GameManager gameManager;
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        deathage = Random.Range(8, 12);
-        for (int i = 0; i < GameManager.homeList.Count;i++)
-        {
-            if (GameManager.homeList[i] > 0)
-            {
-                Home = true;
-                GameManager.homeList[i]--;
-            }
-        }
+        _agent = GetComponent<NavMeshAgent>();
+        _deathage = Random.Range(8, 12);
+        CheckAHomeAvailable();
 
     }
     void Update()
     {
-        if (Hunger == true || age == deathage)
-        {
-                Destroy(gameObject);
-        }
-        if (Tired == false)
+        if (!_tired && !_isOccupied)
         {
             switch (job)
             {
                 case "farmer":
-                    agent.SetDestination(farm.position);
+                    SetADestination(farm);
                     break;
                 case "lumberjack":
-                    agent.SetDestination(forest.position);
+                    SetADestination(forest);
                     break;
                 case "miner":
-                    agent.SetDestination(mine.position);
+                    SetADestination(mine);
                     break;
                 case "mason":
-                    if (agent.remainingDistance <= agent.stoppingDistance) //done with path
+                    if (_agent.remainingDistance <= _agent.stoppingDistance) //done with path
                     {
-                        Vector3 point;
-                        if (RandomPoint(centrePoint.position, range, out point)) //pass in our centre point and radius of area
+                        
+                        if (construct is not null)
                         {
-                            agent.SetDestination(point);
+                            _agent.SetDestination(construct.position);
                         }
+                        Vector3 point;
+                        if(RandomPoint(centrePoint.position, range, out point)) //pass in our centre point and radius of area
+                        {
+                            _agent.SetDestination(point);
+                        }
+                        
                     }
                     break;
                 case "wanderer":
-                    if (agent.remainingDistance <= agent.stoppingDistance)
+                    if (_agent.remainingDistance <= _agent.stoppingDistance)
                     {
                         Vector3 point;
                         if (RandomPoint(centrePoint.position, range, out point))
                         {
-                            agent.SetDestination(point);
+                            _agent.SetDestination(point);
                         }
                     }
-                    if (construct != null)
-                    {
-                        agent.SetDestination(construct.position);
-                    }
+                    
                     break;
             }
         }
-        if (Tired == true)
+        else
         {
-            Joy = false;
-            if (agent.remainingDistance <= agent.stoppingDistance)
+            _joy = false;
+            if (_agent.remainingDistance <= _agent.stoppingDistance)
             {
                 Vector3 point;
                 if (RandomPoint(centrePoint.position, range, out point))
                 {
-                    agent.SetDestination(point);
+                    _agent.SetDestination(point);
                 }
             }
         }
@@ -109,9 +105,40 @@ public class Character : MonoBehaviour
         result = Vector3.zero;
         return false;
     }
-
-    int growOld(int age)
+    
+    private void CheckAHomeAvailable()
     {
-        return age++;
+        for (int i = 0; i < gameManager.homes.Count;i++)
+        {
+            HomeClass actualHome = gameManager.homes[i].GetComponent<HomeClass>();
+            if (actualHome.IsAvailable)
+            {
+                actualHome.IsAvailable = false;
+                _home = true;
+                _homePosition = gameManager.homes[i].transform;
+                break;
+            }
+        }
+    }
+
+    private void SetADestination(Transform destination)
+    {
+        _agent.SetDestination(destination.position);
+        _isOccupied = true;
+    }
+
+    public void CheckIfPnjStillAlive()
+    {
+        if (_hunger || age == _deathage)
+        {
+            gameManager._numberPnjOnGame.Remove(gameObject);
+            Destroy(gameObject);
+        }
+    }
+
+    public void PnjTired()
+    {
+        _tired = true;
+        _agent.SetDestination(_homePosition.position);
     }
 }
