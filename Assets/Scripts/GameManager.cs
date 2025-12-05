@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     //Time management
     public float _prosperity = 5f;
-    private float _dayDuration = 5f; //Set the duration in seconds of a day 
+    private float _dayDuration = 60f; //Set the duration in seconds of a day 
     private float _numberSecondOfDay = 0f;
     private int _numberDay = 1;
     private bool _isOnPlay = true; //Value to use to put game in resume
@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour
         set => _isOnPlay = value;
     }
     
-    private float _numberSecondBeforeBirth = 30f;
+    private float _numberSecondBeforeBirth = 100f;
     
     //Define how much resource there is in game
-    private static int _numberFood = 0; 
+    private static int _numberFood = 20; 
     public int _numberWood = 0;
     public int _numberStone = 0;
     public int foodMultiplicator = 1;
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         [SerializeField] private TextMeshProUGUI dayCounter;
         
     //PNJ
-    [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //Put wanderer in first
+    [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>();
     public List<Character> _numberPnjOnGame = new List<Character>();
     public List<GameObject> _numberMason = new List<GameObject>();
 
@@ -41,13 +41,13 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       UpdateDayCounter();
+       UpdateDayCounter(); //Put text in unity directly so it doesn't need to be call at start
     }
 
     // Update is called once per frame
     void Update()
     {
-        while (_isOnPlay)
+        if (_isOnPlay)
         {
             UpdateTimeAndDay();
         }
