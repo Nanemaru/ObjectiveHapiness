@@ -13,7 +13,7 @@ public class Building : MonoBehaviour
         switch (type)
         {
             case "Home":
-                gameManager.homes.Add(gameObject);
+                //gameManager.homes += 4;
                 break;
             case "Farm":
                 gameManager.foodMultiplicator += 1;
