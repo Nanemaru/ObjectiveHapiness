@@ -16,6 +16,8 @@ public class BuildingPlacer : MonoBehaviour
     private bool isPlacing = false;
     private Renderer previewRenderer;
 
+    private GameManager gameManager;
+
     void Update()
     {
         if (!isPlacing || preview == null)
@@ -47,7 +49,6 @@ public class BuildingPlacer : MonoBehaviour
     // Le ghost suit la souris
     private void FollowMouse()
     {
-        Debug.Log("Test");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
@@ -88,5 +89,7 @@ public class BuildingPlacer : MonoBehaviour
 
         Destroy(preview);  // Supprime le ghost
         isPlacing = false; // Fin du placement
+        gameManager._numberWood -= buildingData.cost[0];
+        gameManager._numberStone -= buildingData.cost[1];
     }
 }
