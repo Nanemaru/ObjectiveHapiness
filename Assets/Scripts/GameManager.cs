@@ -22,18 +22,16 @@ public class GameManager : MonoBehaviour
     
     //Define how much resource there is in game
     private static int _numberFood = 0; 
-    private static int _numberWood = 0;
-    private static int _numberStone = 0;
+    public int _numberWood = 0;
+    public int _numberStone = 0;
     public int foodMultiplicator = 1;
-    private int[] _resourcesIntArray = new int[3] { _numberFood, _numberWood, _numberStone };
     //Canvas management
-        [SerializeField] private TextMeshProUGUI[] resourcesTextArray = new TextMeshProUGUI[3];
         [SerializeField] private TextMeshProUGUI dayCounter;
         
     //PNJ
     [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //Put wanderer in first
     public List<Character> _numberPnjOnGame = new List<Character>();
-    private List<GameObject> _numberMason = new List<GameObject>();
+    public List<GameObject> _numberMason = new List<GameObject>();
 
     //Buildings
     public List<GameObject> homes = new List<GameObject>();
@@ -102,14 +100,6 @@ public class GameManager : MonoBehaviour
         foreach (var pnj in _numberPnjOnGame)
         {
             pnj.agent.isStopped = !pnj.agent.isStopped;
-        }
-    }
-
-    private void UpdateResourcesText()
-    {
-        for (int i = 0; i < resourcesTextArray.Length; i++)
-        {
-            resourcesTextArray[i].text = _resourcesIntArray[i].ToString();
         }
     }
 
