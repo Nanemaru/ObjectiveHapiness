@@ -1,121 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Character : MonoBehaviour
 {
-    public string job;
+    public string job = "wanderer";
     public Transform farm;
     public Transform forest;
     public Transform mine;
-    public Transform construct = null;
     public int age = 0;
-    private NavMeshAgent _agent;
+    public NavMeshAgent agent;
     public float range; //radius of sphere
     public Transform centrePoint; //centre of the area the agent wants to move around in instead of centrePoint you can set it as the transform of the agent if you don't care about a specific area
-    private bool _hunger = false;
+    public bool hunger = false;
     private bool _tired = false;
-    private bool _isOccupied = false;
-    private bool _joy = true;
+    public bool isOccupied = false;
     private bool _home = false;
     private Transform _homePosition;
-    private int _deathage;
-    
-    private GameManager gameManager;
+    private int _ageOfDeath;
+    private Vector3 _destinationWhenResume;
+    private GameManager _gameManager;
+    public int resourcesToGive = 0;
     void Start()
     {
-        _agent = GetComponent<NavMeshAgent>();
-        _deathage = Random.Range(8, 12);
+        agent = GetComponent<NavMeshAgent>();
+        _ageOfDeath = Random.Range(8, 12);
         CheckAHomeAvailable();
-        gameManager = FindObjectOfType<GameManager>();
+        _gameManager = FindObjectOfType<GameManager>();
+        SetupAgent(job);
     }
     void Update()
     {
-        if (!_tired && !_isOccupied)
+        if (agent.remainingDistance <= agent.stoppingDistance && !agent.isStopped)
         {
-            switch (job)
+            if (!isOccupied) MakePnjWander();
+            else
             {
-                case "farmer":
-                    SetADestination(farm);
-                    break;
-                case "lumberjack":
-                    SetADestination(forest);
-                    break;
-                case "miner":
-                    SetADestination(mine);
-                    break;
-                case "mason":
-                    if (_agent.remainingDistance <= _agent.stoppingDistance) //done with path
-                    {
-                        
-                        if (construct is not null)
-                        {
-                            _agent.SetDestination(construct.position);
-                        }
-                        Vector3 point;
-                        if(RandomPoint(centrePoint.position, range, out point)) //pass in our centre point and radius of area
-                        {
-                            _agent.SetDestination(point);
-                        }
-                        
-                    }
-                    break;
-                case "wanderer":
-                    if (_agent.remainingDistance <= _agent.stoppingDistance)
-                    {
-                        Vector3 point;
-                        if (RandomPoint(centrePoint.position, range, out point))
-                        {
-                            _agent.SetDestination(point);
-                        }
-                    }
-                    
-                    break;
+                //Faire une animation ?
+                resourcesToGive += 3 * _gameManager.foodMultiplicator;
             }
         }
-        else
+
+        if (_tired)
         {
-            _joy = false;
-            if (_agent.remainingDistance <= _agent.stoppingDistance)
-            {
-                Vector3 point;
-                if (RandomPoint(centrePoint.position, range, out point))
-                {
-                    _agent.SetDestination(point);
-                }
-            }
+            PnjTired();
         }
     }
-
-    bool RandomPoint(Vector3 center, float range, out Vector3 result)
-    {
-
-        Vector3 randomPoint = center + Random.insideUnitSphere * range; //random point in a sphere 
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-        {
-            //the 1.0f is the max distance from the random point to a point on the navmesh, might want to increase if range is big
-            //or add a for loop like in the documentation
-            result = hit.position;
-            return true;
-        }
-
-        result = Vector3.zero;
-        return false;
-    }
-    
     private void CheckAHomeAvailable()
     {
-        for (int i = 0; i < gameManager.homes.Count;i++)
+        foreach (var home in _gameManager.homes)
         {
-            HomeClass actualHome = gameManager.homes[i].GetComponent<HomeClass>();
+            HomeClass actualHome = home.GetComponent<HomeClass>();
             if (actualHome.IsAvailable)
             {
                 actualHome.IsAvailable = false;
                 _home = true;
-                _homePosition = gameManager.homes[i].transform;
+                _homePosition = home.transform;
                 break;
             }
         }
@@ -123,27 +62,73 @@ public class Character : MonoBehaviour
 
     private void SetADestination(Transform destination)
     {
-        _agent.SetDestination(destination.position);
-        _isOccupied = true;
+        agent.SetDestination(destination.position);
+        isOccupied = true;
     }
 
     public void CheckIfPnjStillAlive()
     {
-        if (_hunger || age == _deathage)
+        if (hunger || age == _ageOfDeath)
         {
-            gameManager._numberPnjOnGame.Remove(gameObject);
+            _gameManager._numberPnjOnGame.Remove(gameObject.GetComponent<Character>());
             Destroy(gameObject);
         }
     }
 
     public void PnjTired() //Function when PnjTired
     {
-        _tired = true;
-        if (!_home)
+        float prosperityToAdd;
+        if (!_home) CheckAHomeAvailable();
+        if (_home)
         {
-            CheckAHomeAvailable();
+            agent.SetDestination(_homePosition.position);
+            prosperityToAdd = 2f;
+            _tired = false;
         }
-        if (_home) _agent.SetDestination(_homePosition.position);
+        else
+        {
+            prosperityToAdd = -0.1f;
+            MakePnjWander();
+        }
+        _gameManager.UpdateProsperity(prosperityToAdd);
         
     }
+
+    private void SetupAgent(string job) //Give A destination to pnj based on their job
+    {
+        switch (job)
+        {
+            case "farmer":
+                SetADestination(farm);
+                break;
+            case "lumberjack":
+                SetADestination(forest);
+                break;
+            case "miner":
+                SetADestination(mine);
+                break;
+            case "mason":
+            case "wanderer":
+                MakePnjWander();
+                break;
+        }
+    }
+
+    private void MakePnjWander()
+    {
+        bool destinationOnMesh = false;
+        Vector3 destination = new Vector3();
+        while (!destinationOnMesh)
+        {
+            Vector3 randomPoint = centrePoint.position + Random.insideUnitSphere * range;
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            {
+                destination = hit.position;
+                destinationOnMesh = true;
+            }
+        }
+        agent.SetDestination(destination);
+    }
+
 }
