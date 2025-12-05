@@ -12,9 +12,9 @@ public class Character : MonoBehaviour
     public float range; //radius of sphere
     public Transform centrePoint; //centre of the area the agent wants to move around in instead of centrePoint you can set it as the transform of the agent if you don't care about a specific area
     public bool hunger = false;
-    private bool _tired = false;
+    public bool _tired = false;
     public bool isOccupied = false;
-    private bool _home = false;
+    public bool _home = false;
     private Transform _homePosition;
     private int _ageOfDeath;
     private Vector3 _destinationWhenResume;
@@ -22,10 +22,10 @@ public class Character : MonoBehaviour
     public int resourcesToGive = 0;
     void Start()
     {
+        _gameManager = FindObjectOfType<GameManager>();
         agent = GetComponent<NavMeshAgent>();
         _ageOfDeath = Random.Range(8, 12);
         CheckAHomeAvailable();
-        _gameManager = FindObjectOfType<GameManager>();
         SetupAgent(job);
     }
     void Update()
@@ -40,13 +40,14 @@ public class Character : MonoBehaviour
             }
         }
 
-        if (_tired)
+        /*if (_tired)
         {
-            PnjTired();
-        }
+            PnjTired(); 
+        }*/
     }
     private void CheckAHomeAvailable()
-    {
+    {   
+        if (job == "wanderer") return;
         foreach (var home in _gameManager.homes)
         {
             HomeClass actualHome = home.GetComponent<HomeClass>();
@@ -77,6 +78,7 @@ public class Character : MonoBehaviour
 
     public void PnjTired() //Function when PnjTired
     {
+        if (job != "wanderer") _tired = true;
         float prosperityToAdd;
         if (!_home) CheckAHomeAvailable();
         if (_home)

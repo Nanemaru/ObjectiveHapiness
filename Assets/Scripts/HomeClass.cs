@@ -12,17 +12,17 @@ public class HomeClass : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Character"))
         {
-            other.GetComponent<Renderer>().enabled = false;
+            other.GetComponent<MeshRenderer>().enabled = false;
         }
     }
     
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Character"))
         {
-            other.GetComponent<Renderer>().enabled = false;
+            other.GetComponent<MeshRenderer>().enabled = false;
         }
     }
 }
