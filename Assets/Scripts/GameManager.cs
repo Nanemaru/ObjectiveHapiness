@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     private float _numberSecondBeforeBirth = 100f;
     
     //Define how much resource there is in game
-    private static int _numberFood = 20; 
+    public int _numberFood = 20; 
     public int _numberWood = 0;
     public int _numberStone = 0;
     public int foodMultiplicator = 1;
@@ -29,7 +29,8 @@ public class GameManager : MonoBehaviour
         [SerializeField] private TextMeshProUGUI dayCounter;
         
     //PNJ
-    [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>();
+    [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //script for prefab pnj
+    [SerializeField] private GameObject wanderer;
     public List<Character> _numberPnjOnGame = new List<Character>();
     public List<GameObject> _numberMason = new List<GameObject>();
 
@@ -116,7 +117,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void CreateBuilding(GameObject building, Transform positionOfBuilding, int numberOfMasonNeeded) //Give work to mason when a building is create
+    /*private void CreateBuilding(GameObject building, Transform positionOfBuilding, int numberOfMasonNeeded) //Give work to mason when a building is create
     {
         for (int i = 0; i < numberOfMasonNeeded; i++)
         {
@@ -129,7 +130,7 @@ public class GameManager : MonoBehaviour
         }
         //Instantiate(building, positionOfBuilding.position, building.transform.rotation); //Faire en sorte que ça se fasse au bout de X temps
         //UpdateProsperity(); if Bookstore or Museum
-    }
+    }*/
 
     private void CreateHome(GameObject home)
     {
@@ -139,8 +140,7 @@ public class GameManager : MonoBehaviour
 
     private void CreatePnj()
     {
-        int rand =  Random.Range(0, typeOfPnj.Count - 1);
-        GameObject newPnj = Instantiate(typeOfPnj[rand]);
+        GameObject newPnj = Instantiate(wanderer);
         Character scriptNewPnj = newPnj.GetComponent<Character>();
         _numberPnjOnGame.Add(scriptNewPnj);
     }

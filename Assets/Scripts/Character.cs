@@ -30,13 +30,14 @@ public class Character : MonoBehaviour
     }
     void Update()
     {
+        Debug.Log(agent.isStopped);
         if (agent.remainingDistance <= agent.stoppingDistance && !agent.isStopped)
         {
-            if (!isOccupied) MakePnjWander();
+            if (!isOccupied) MakePnjWander(); 
             else
             {
                 //Faire une animation ?
-                resourcesToGive += 3 * _gameManager.foodMultiplicator;
+                resourcesToGive += 3 * _gameManager.foodMultiplicator; //Faire un event pour que ça s'effectue une seule fois
             }
         }
 
@@ -76,7 +77,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void PnjTired() //Function when PnjTired
+    public void PnjTired() //Function when Pnj is Tired
     {
         if (job != "wanderer") _tired = true;
         float prosperityToAdd;
