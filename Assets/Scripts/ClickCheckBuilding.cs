@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClickCheckBuilding : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Building building;              
+    public Button buildButton;             
+    public GameManager gameManager;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        bool canBuild = gameManager._numberWood >= building.cost[0] && gameManager._numberStone >= building.cost[1] && gameManager._numberMason >= building.cost[2];
+        buildButton.interactable = canBuild;
     }
 }
