@@ -2801,13 +2801,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 68642229}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1520853330}
-  m_Father: {fileID: 718487820}
+  m_Father: {fileID: 215865764}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2959,6 +2959,7 @@ MonoBehaviour:
   checkRadius: 1
   validMat: {fileID: -1846407553807266444, guid: 71a68e45e20e83e4fac85919a8cd834c, type: 3}
   invalidMat: {fileID: 2100000, guid: 66a45548034c52848b3236ae38c254b7, type: 2}
+  gameManager: {fileID: 452199883}
 --- !u!1001 &68932023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7823,18 +7824,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   job: farmer
-  farm: {fileID: 1991519576}
-  forest: {fileID: 1991519576}
-  mine: {fileID: 415006147}
   age: 0
   agent: {fileID: 0}
-  range: 0
-  centrePoint: {fileID: 1320663175}
+  resourcesToGive: 0
   hunger: 0
   _tired: 0
-  isOccupied: 0
   _home: 0
-  resourcesToGive: 0
+  range: 0
 --- !u!1001 &164381528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9655,6 +9651,42 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &215865763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 215865764}
+  m_Layer: 5
+  m_Name: test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &215865764
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215865763}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 68642230}
+  m_Father: {fileID: 718487820}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!43 &219904974
 Mesh:
   m_ObjectHideFlags: 0
@@ -17910,11 +17942,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!4 &415006147 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4621419113959070603, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
-  m_PrefabInstance: {fileID: 96034648}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &416109124
 Mesh:
   m_ObjectHideFlags: 0
@@ -19607,8 +19634,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prosperity: 5
   _numberFood: 20
-  _numberWood: 0
-  _numberStone: 0
+  _numberWood: 10
+  _numberStone: 10
   foodMultiplicator: 1
   dayCounter: {fileID: 0}
   typeOfPnj: []
@@ -19618,6 +19645,10 @@ MonoBehaviour:
   homes: []
   school: {fileID: 0}
   _isSchoolCreate: 0
+  farm: {fileID: 0}
+  forest: {fileID: 0}
+  mine: {fileID: 0}
+  centrePoint: {fileID: 0}
 --- !u!4 &452199884
 Transform:
   m_ObjectHideFlags: 0
@@ -34606,8 +34637,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1193002328}
-  - {fileID: 68642230}
   - {fileID: 72563487}
+  - {fileID: 215865764}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -58277,11 +58308,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
---- !u!4 &1320663175 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4621419113959070603, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
-  m_PrefabInstance: {fileID: 1535986237}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1321827781
 Mesh:
   m_ObjectHideFlags: 0
@@ -89227,11 +89253,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
---- !u!4 &1991519576 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4621419113959070603, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
-  m_PrefabInstance: {fileID: 2055168092}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1993665465
 Mesh:
   m_ObjectHideFlags: 0

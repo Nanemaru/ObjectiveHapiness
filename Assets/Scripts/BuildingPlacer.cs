@@ -24,7 +24,7 @@ public class BuildingPlacer : MonoBehaviour
             return;
 
         FollowMouse();
-
+ 
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             TryPlace();
@@ -65,6 +65,7 @@ public class BuildingPlacer : MonoBehaviour
     // Tentative de placement
     private void TryPlace()
     {
+        Debug.Log("test");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
@@ -91,5 +92,6 @@ public class BuildingPlacer : MonoBehaviour
         isPlacing = false; // Fin du placement
         gameManager._numberWood -= buildingData.cost[0];
         gameManager._numberStone -= buildingData.cost[1];
+        buildingData.UpdateBuildEffect();
     }
 }
