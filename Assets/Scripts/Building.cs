@@ -4,30 +4,30 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    private GameManager _gameManager;
+    
+    //Data
     public string type;
     public List<int> cost; //order: wood, rock, mason
-    private GameManager gameManager;
+    
 
     void Start()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         switch (type)
         {
             case "Home":
-                gameManager.homes.Add(gameObject);
+                _gameManager.homes.Add(GetComponent<HomeClass>());
                 break;
             case "Farm":
-                gameManager.foodMultiplicator += 1;
+                _gameManager.foodMultiplicator += 1;
                 break;
             case "Library":
-                gameManager._prosperity += 1;
+                _gameManager._prosperity += 1;
                 break;
             case "Museum":
-                gameManager._prosperity += 2;
+                _gameManager._prosperity += 2;
                 break;
         }
-    }
-    void Update()
-    {
-        
     }
 }

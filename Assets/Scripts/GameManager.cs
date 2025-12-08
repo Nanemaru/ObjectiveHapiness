@@ -12,13 +12,13 @@ public class GameManager : MonoBehaviour
     private float _numberSecondOfDay = 0f;
     private int _numberDay = 1;
     private bool _isOnPlay = true; //Value to use to put game in resume
+    private float _numberSecondForABirth = 30f;
+    private float _SecondForBirthCounter;
     public bool IsOnPlay
     {
         get => _isOnPlay;
         set => _isOnPlay = value;
     }
-    
-    private float _numberSecondBeforeBirth = 100f;
     
     //Define how much resource there is in game
     public int _numberFood = 20; 
@@ -35,17 +35,21 @@ public class GameManager : MonoBehaviour
     public List<GameObject> _numberMason = new List<GameObject>();
 
     //Buildings
-    public List<GameObject> homes = new List<GameObject>();
+    public List<HomeClass> homes = new List<HomeClass>();
 
     public Transform school;
     public bool _isSchoolCreate = false;
-    // Start is called before the first frame update
-    void Start()
+    
+    //Work Zone
+    public Transform farm;
+    public Transform forest;
+    public Transform mine;
+    public Transform centrePoint;
+    /*void Start()
     {
        UpdateDayCounter(); //Put text in unity directly so it doesn't need to be call at start
-    }
+    }*/
 
-    // Update is called once per frame
     void Update()
     {
         if (_isOnPlay)
@@ -73,7 +77,7 @@ public class GameManager : MonoBehaviour
         UpdateDayCounter();
     }
 
-    private void UpdatePnj()
+    private void UpdatePnj() //Function call to update pnj
     {
         foreach (var pnj in _numberPnjOnGame)
         {
@@ -113,7 +117,12 @@ public class GameManager : MonoBehaviour
     private void UpdateTimeAndDay()
     {
         _numberSecondOfDay  += Time.deltaTime;
-        if (_numberSecondOfDay > _numberSecondBeforeBirth) CreatePnj();
+        _SecondForBirthCounter += Time.deltaTime;
+        if  (_SecondForBirthCounter >= _numberSecondForABirth)
+        {
+            CreatePnj();
+            _SecondForBirthCounter = 0f;
+        }
         if (_numberSecondOfDay > _dayDuration) NextDay();
     }
 
@@ -133,17 +142,15 @@ public class GameManager : MonoBehaviour
         //UpdateProsperity(); if Bookstore or Museum
     }*/
 
-    private void CreateHome(GameObject home)
+    /*private void CreateHome(GameObject home)
     {
         Instantiate(home);
         homes.Add(home);
-    }
+    }*/
 
     private void CreatePnj()
     {
-        GameObject newPnj = Instantiate(wanderer);
-        Character scriptNewPnj = newPnj.GetComponent<Character>();
-        _numberPnjOnGame.Add(scriptNewPnj);
+        _numberPnjOnGame.Add(Instantiate(wanderer).GetComponent<Character>());
     }
 
     private void NourrishPnj()
@@ -162,7 +169,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < numberToKill; i++)
         {
             int rand = Random.Range(0, _numberPnjOnGame .Count - 1);
-            Character pnj = _numberPnjOnGame[rand].GetComponent<Character>();
+            Character pnj = _numberPnjOnGame[rand];
             pnj.hunger = true;
         }
     }
@@ -185,10 +192,5 @@ public class GameManager : MonoBehaviour
             }
             character.resourcesToGive = 0;
         }
-    }
-
-    private void ResourceToUpdate(int resourceType, Character character)
-    {
-        resourceType +=character.resourcesToGive;
     }
 }

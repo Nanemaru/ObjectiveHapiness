@@ -6,23 +6,21 @@ using Random = UnityEngine.Random;
 
 public class Character : MonoBehaviour
 {
+    private GameManager _gameManager;
+    //Character Data
     public string job = "wanderer";
-    public Transform farm;
-    public Transform forest;
-    public Transform mine;
     public int age = 0;
     public NavMeshAgent agent;
-    public float range; //radius of sphere
-    public Transform centrePoint; //centre of the area the agent wants to move around in instead of centrePoint you can set it as the transform of the agent if you don't care about a specific area
-    public bool hunger = false;
-    public bool _tired = false;
-    public bool isOccupied = false;
-    public bool _home = false;
     private Transform _homePosition;
     private int _ageOfDeath;
-    private Vector3 _destinationWhenResume;
-    private GameManager _gameManager;
     public int resourcesToGive = 0;
+    //Character state
+    public bool hunger = false;
+    public bool _tired = false;
+    public bool _home = false;
+    //Value for mouvement
+    private Vector3 _destinationWhenResume;
+    public float range;
     void Start()
     {
         _gameManager = FindObjectOfType<GameManager>();
@@ -35,25 +33,20 @@ public class Character : MonoBehaviour
     {
         if (job == "wanderer" || _tired)
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
+            if (agent.remainingDistance <= agent.stoppingDistance) //Make pnj wander as long as they're tired ou wanderer
             {
                 MakePnjWander();
             }
         }
-        /*if (_tired)
-        {
-            PnjTired();
-        }*/
     }
     private void CheckAHomeAvailable()
     {   
         if (job == "wanderer") return;
         foreach (var home in _gameManager.homes)
         {
-            HomeClass actualHome = home.GetComponent<HomeClass>();
-            if (actualHome.IsAvailable)
+            if (home.IsAvailable)
             {
-                actualHome.IsAvailable = false;
+                home.IsAvailable = false;
                 _home = true;
                 _homePosition = home.transform;
                 break;
@@ -64,14 +57,13 @@ public class Character : MonoBehaviour
     private void SetADestination(Transform destination)
     {
         agent.SetDestination(destination.position);
-        isOccupied = true;
     }
 
     public void CheckIfPnjStillAlive()
     {
         if (hunger || age == _ageOfDeath)
         {
-            _gameManager._numberPnjOnGame.Remove(gameObject.GetComponent<Character>());
+            _gameManager._numberPnjOnGame.Remove(this);
             Destroy(gameObject);
         }
     }
@@ -88,7 +80,7 @@ public class Character : MonoBehaviour
             prosperityToAdd = 2f;
             _tired = false;
         }
-        else
+        else //If pnj doesn't find a home it wander until it find a home available
         {
             prosperityToAdd = -3f;
             MakePnjWander();
@@ -102,13 +94,13 @@ public class Character : MonoBehaviour
         switch (job)
         {
             case "farmer":
-                SetADestination(farm);
+                SetADestination(_gameManager.farm);
                 break;
             case "lumberjack":
-                SetADestination(forest);
+                SetADestination(_gameManager.forest);
                 break;
             case "miner":
-                SetADestination(mine);
+                SetADestination(_gameManager.mine);
                 break;
             case "mason":
             case "wanderer":
@@ -123,7 +115,7 @@ public class Character : MonoBehaviour
         Vector3 destination = new Vector3();
         while (!destinationOnMesh)
         {
-            Vector3 randomPoint = centrePoint.position + Random.insideUnitSphere * range;
+            Vector3 randomPoint = _gameManager.centrePoint.position + Random.insideUnitSphere * range;
             NavMeshHit hit;
             if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
             {
