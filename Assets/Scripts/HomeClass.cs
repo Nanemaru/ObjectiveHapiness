@@ -10,7 +10,7 @@ public class HomeClass : MonoBehaviour
         set => _isAvailable = value;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) //Disable pnj when they're in their home
     {
         if (other.CompareTag("Character"))
         {

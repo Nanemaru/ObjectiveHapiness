@@ -4378,7 +4378,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Fermer
+  m_text: 'Lumberjack
 
 '
   m_isRightToLeft: 0
@@ -7783,6 +7783,58 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &161265013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4184050208074669656, guid: 1618ef302478c0d4f83bebadfd69ec50, type: 3}
+  m_PrefabInstance: {fileID: 938460361}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &161265014
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161265013}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 5.877211
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 16.156612
+  m_BaseOffset: 8.078306
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &161265015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161265013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a9159780fbd55a43843c2d2dfff42ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  job: farmer
+  farm: {fileID: 1991519576}
+  forest: {fileID: 1991519576}
+  mine: {fileID: 415006147}
+  age: 0
+  agent: {fileID: 0}
+  range: 0
+  centrePoint: {fileID: 1320663175}
+  hunger: 0
+  _tired: 0
+  isOccupied: 0
+  _home: 0
+  resourcesToGive: 0
 --- !u!1001 &164381528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17858,6 +17910,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &415006147 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4621419113959070603, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
+  m_PrefabInstance: {fileID: 96034648}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &416109124
 Mesh:
   m_ObjectHideFlags: 0
@@ -19528,6 +19585,7 @@ GameObject:
   m_Component:
   - component: {fileID: 452199884}
   - component: {fileID: 452199883}
+  - component: {fileID: 452199885}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -19575,6 +19633,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &452199885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452199882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3869cb2a2507be479a96a0ec7707b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jobUI: {fileID: 72563486}
 --- !u!1001 &452472085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44798,7 +44869,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4184050208074669656, guid: 1618ef302478c0d4f83bebadfd69ec50, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 161265015}
+    - targetCorrespondingSourceObject: {fileID: 4184050208074669656, guid: 1618ef302478c0d4f83bebadfd69ec50, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 161265014}
   m_SourcePrefab: {fileID: 100100000, guid: 1618ef302478c0d4f83bebadfd69ec50, type: 3}
 --- !u!43 &946933041
 Mesh:
@@ -50953,7 +51030,7 @@ GameObject:
   - component: {fileID: 1097638304}
   - component: {fileID: 1097638303}
   m_Layer: 5
-  m_Name: Fermer
+  m_Name: lumberjack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51023,16 +51100,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 72563486}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 452199885}
+        m_TargetAssemblyTypeName: CharacterClickUI, Assembly-CSharp
+        m_MethodName: GiveANewJob
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: lumberjack
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1097638304
@@ -54562,7 +54639,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1193002328}
-  - component: {fileID: 1193002327}
   m_Layer: 0
   m_Name: CharacterClickUI
   m_TagString: Untagged
@@ -54570,20 +54646,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1193002327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1193002326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3869cb2a2507be479a96a0ec7707b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CharacterClicked: {fileID: 0}
-  jobUI: {fileID: 72563486}
 --- !u!4 &1193002328
 Transform:
   m_ObjectHideFlags: 0
@@ -58215,6 +58277,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
+--- !u!4 &1320663175 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4621419113959070603, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
+  m_PrefabInstance: {fileID: 1535986237}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1321827781
 Mesh:
   m_ObjectHideFlags: 0
@@ -70369,7 +70436,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606974004}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53bf2c83ff81cfa4fa351fc2235a8173, type: 3}
   m_Name: 
@@ -87050,7 +87117,7 @@ GameObject:
   - component: {fileID: 1940133115}
   - component: {fileID: 1940133114}
   m_Layer: 5
-  m_Name: Farmer
+  m_Name: farmer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87101,7 +87168,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 0, b: 0, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -87119,7 +87186,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1940133115}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 452199885}
+        m_TargetAssemblyTypeName: CharacterClickUI, Assembly-CSharp
+        m_MethodName: GiveANewJob
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: farmer
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1940133115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89148,6 +89227,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
+--- !u!4 &1991519576 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4621419113959070603, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
+  m_PrefabInstance: {fileID: 2055168092}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1993665465
 Mesh:
   m_ObjectHideFlags: 0

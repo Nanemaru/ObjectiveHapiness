@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CharacterClickUI : MonoBehaviour
 {
-    public GameObject CharacterClicked;
-    public GameObject jobUI; // Le panneau UI caché au début
+    public GameObject jobUI; // Le panneau UI cachï¿½ au dï¿½but
     private Camera cam;
+    //[SerializeField] private CharacterJobAssign scriptJobAssign;
+    private Character scriptCharacter;
 
     void Start()
     {
         cam = Camera.main;
-        jobUI.SetActive(false); // UI caché au lancement
+        jobUI.SetActive(false); // UI cachï¿½ au lancement
     }
 
     void Update()
@@ -32,13 +34,29 @@ public class CharacterClickUI : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            // Si l’objet cliqué a le tag Character
+            // Si lï¿½objet cliquï¿½ a le tag Character
             if (hit.collider.CompareTag("Character"))
             {
                 jobUI.SetActive(true);
-                CharacterClicked = hit.transform.gameObject;
-                
+                scriptCharacter = hit.transform.gameObject.GetComponent<Character>();
+                EnabledAllWorkButtonExceptOne(scriptCharacter.job);
             }
         }
+    }
+    
+    private void EnabledAllWorkButtonExceptOne(string work)
+    {
+        foreach (Transform child in jobUI.transform)
+        {
+            Button button = child.GetComponent<Button>();
+            if  (child.gameObject.name != work) button.interactable = true;
+            else button.interactable = false;
+        }
+    }
+    
+    public void GiveANewJob(string newWork)
+    {
+        scriptCharacter.job =  newWork;
+        jobUI.SetActive(false);
     }
 }
