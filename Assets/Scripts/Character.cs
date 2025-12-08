@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -28,7 +29,7 @@ public class Character : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         _ageOfDeath = Random.Range(8, 12);
         CheckAHomeAvailable();
-        SetupAgent(job);
+        SetupAgent();
     }
     void Update()
     {
@@ -96,7 +97,7 @@ public class Character : MonoBehaviour
         
     }
 
-    private void SetupAgent(string job) //Give A destination to pnj based on their job
+    private void SetupAgent() //Give A destination to pnj based on their job
     {
         switch (job)
         {
@@ -133,12 +134,24 @@ public class Character : MonoBehaviour
         agent.SetDestination(destination);
     }
 
-    private void OnTriggerEnter(Collider other) //Check if pnj are in their workzone
+    private void OnTriggerEnter(Collider other) //Check if pnj are in their workzone or home
     {
         if (other.CompareTag(job))
         {
             resourcesToGive += 3 * _gameManager.foodMultiplicator;
         }
-        else if (other.transform == _homePosition) _tired = false;
+        
+        else if (other.transform == _homePosition)
+        {
+            _tired = false;
+            StartCoroutine(PnjSleeping());
+            
+        }
+    }
+    
+    IEnumerator PnjSleeping() //Coroutine to let Pnj sleep before return to work
+    {
+        yield return new WaitForSeconds(5);
+        SetupAgent();
     }
 }
