@@ -24,9 +24,10 @@ public class BuildingPlacer : MonoBehaviour
             return;
 
         FollowMouse();
-
+        Debug.Log(Input.GetMouseButtonDown(0));
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
+            Debug.Log("test");
             TryPlace();
         }
     }
@@ -65,6 +66,7 @@ public class BuildingPlacer : MonoBehaviour
     // Tentative de placement
     private void TryPlace()
     {
+        Debug.Log("test");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
