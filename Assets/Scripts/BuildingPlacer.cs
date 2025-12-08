@@ -16,7 +16,7 @@ public class BuildingPlacer : MonoBehaviour
     private bool isPlacing = false;
     private Renderer previewRenderer;
 
-    private GameManager gameManager;
+    [SerializeField] private GameManager gameManager;
 
     void Update()
     {
