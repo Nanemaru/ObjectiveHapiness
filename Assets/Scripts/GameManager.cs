@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -31,9 +32,11 @@ public class GameManager : MonoBehaviour
     //PNJ
     [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //script for prefab pnj
     [SerializeField] private GameObject wanderer;
-    public List<Character> _numberPnjOnGame = new List<Character>();
+    //public List<Character> _numberPnjOnGame = new List<Character>();
     public List<GameObject> _numberMason = new List<GameObject>();
-
+    //Event
+    public UnityEvent _eventUpdatePnj;
+    public UnityEvent _eventPnjInResume;
     //Buildings
     public List<HomeClass> homes = new List<HomeClass>();
 
@@ -65,29 +68,23 @@ public class GameManager : MonoBehaviour
     
     private  void LoseGame() //Function call when all pnj are dead
     {
+        Debug.Log("LoseGame");
     }
 
     private void NextDay() //Function call to pass to next day
     {
         _numberSecondOfDay = 0f;
         _numberDay++;
-        UpdateResources();
-        NourrishPnj();
+        //UpdateResources();
         UpdatePnj();
         UpdateDayCounter();
     }
 
     private void UpdatePnj() //Function call to update pnj
     {
-        foreach (var pnj in _numberPnjOnGame)
-        {
-            pnj.age++;
-            pnj.CheckIfPnjStillAlive();
-            pnj.PnjTired();
-        }
+        _eventUpdatePnj.Invoke();
+        if (!FindAnyObjectByType<Character>()) LoseGame();
     }
-    
-
     public void UpdateProsperity(float value) //Function call to update prosperity with positive or negative value
     {
         _prosperity += value;
@@ -98,15 +95,7 @@ public class GameManager : MonoBehaviour
     {
         _isOnPlay = !_isOnPlay;
         //Change sprite
-        PutPnjOnResume();
-    }
-
-    public void PutPnjOnResume()
-    {
-        foreach (var pnj in _numberPnjOnGame)
-        {
-            pnj.agent.isStopped = !pnj.agent.isStopped;
-        }
+        _eventPnjInResume.Invoke();
     }
 
     private void UpdateDayCounter()
@@ -120,7 +109,7 @@ public class GameManager : MonoBehaviour
         _SecondForBirthCounter += Time.deltaTime;
         if  (_SecondForBirthCounter >= _numberSecondForABirth)
         {
-            CreatePnj();
+            Instantiate(wanderer);
             _SecondForBirthCounter = 0f;
         }
         if (_numberSecondOfDay > _dayDuration) NextDay();
@@ -148,12 +137,7 @@ public class GameManager : MonoBehaviour
         homes.Add(home);
     }*/
 
-    private void CreatePnj()
-    {
-        _numberPnjOnGame.Add(Instantiate(wanderer).GetComponent<Character>());
-    }
-
-    private void NourrishPnj()
+    /*private void NourrishPnj()
     {
         if (_numberFood < _numberPnjOnGame.Count)
         {
@@ -162,19 +146,18 @@ public class GameManager : MonoBehaviour
             MakeRandomPnjHungry(numberPnjToKill);
         }
         else _numberFood -= _numberPnjOnGame.Count;
-    }
+    }*/
 
-    private void MakeRandomPnjHungry(int numberToKill)  //Function call if there is more pnj than food so some will not be able to eat
+    /*private void MakeRandomPnjHungry(int numberToKill)  //Function call if there is more pnj than food so some will not be able to eat
     {
         for (int i = 0; i < numberToKill; i++)
         {
             int rand = Random.Range(0, _numberPnjOnGame .Count - 1);
-            Character pnj = _numberPnjOnGame[rand];
-            pnj.hunger = true;
+            _numberPnjOnGame[rand].hunger = true;
         }
-    }
+    }*/
 
-    private void UpdateResources()
+    /*private void UpdateResources()
     {
         foreach (var character in _numberPnjOnGame)
         {
@@ -192,5 +175,5 @@ public class GameManager : MonoBehaviour
             }
             character.resourcesToGive = 0;
         }
-    }
+    }*/
 }
