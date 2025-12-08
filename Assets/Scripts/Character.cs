@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class Character : MonoBehaviour
 {
@@ -30,20 +32,16 @@ public class Character : MonoBehaviour
     }
     void Update()
     {
-        Debug.Log(agent.isStopped);
-        if (agent.remainingDistance <= agent.stoppingDistance && !agent.isStopped)
+        if (job == "wanderer" || _tired)
         {
-            if (!isOccupied) MakePnjWander(); 
-            else
+            if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                //Faire une animation ?
-                resourcesToGive += 3 * _gameManager.foodMultiplicator; //Faire un event pour que ça s'effectue une seule fois
+                MakePnjWander();
             }
         }
-
         /*if (_tired)
         {
-            PnjTired(); 
+            PnjTired();
         }*/
     }
     private void CheckAHomeAvailable()
@@ -79,7 +77,8 @@ public class Character : MonoBehaviour
 
     public void PnjTired() //Function when Pnj is Tired
     {
-        if (job != "wanderer") _tired = true;
+        if (job == "wanderer") return;
+        else _tired = true;
         float prosperityToAdd;
         if (!_home) CheckAHomeAvailable();
         if (_home)
@@ -90,7 +89,7 @@ public class Character : MonoBehaviour
         }
         else
         {
-            prosperityToAdd = -0.1f;
+            prosperityToAdd = -3f;
             MakePnjWander();
         }
         _gameManager.UpdateProsperity(prosperityToAdd);
@@ -134,4 +133,12 @@ public class Character : MonoBehaviour
         agent.SetDestination(destination);
     }
 
+    private void OnTriggerEnter(Collider other) //Check if pnj are in their workzone
+    {
+        if (other.CompareTag(job))
+        {
+            resourcesToGive += 3 * _gameManager.foodMultiplicator;
+        }
+        else if (other.transform == _homePosition) _tired = false;
+    }
 }

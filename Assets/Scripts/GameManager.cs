@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
     {
         _numberSecondOfDay = 0f;
         _numberDay++;
+        UpdateResources();
         NourrishPnj();
         UpdatePnj();
         UpdateDayCounter();
@@ -182,6 +183,7 @@ public class GameManager : MonoBehaviour
                     _numberStone  += character.resourcesToGive;
                     break;
             }
+            character.resourcesToGive = 0;
         }
     }
 
