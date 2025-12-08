@@ -91,5 +91,6 @@ public class BuildingPlacer : MonoBehaviour
         isPlacing = false; // Fin du placement
         gameManager._numberWood -= buildingData.cost[0];
         gameManager._numberStone -= buildingData.cost[1];
+        buildingData.UpdateBuildEffect();
     }
 }

@@ -2959,6 +2959,7 @@ MonoBehaviour:
   checkRadius: 1
   validMat: {fileID: -1846407553807266444, guid: 71a68e45e20e83e4fac85919a8cd834c, type: 3}
   invalidMat: {fileID: 2100000, guid: 66a45548034c52848b3236ae38c254b7, type: 2}
+  gameManager: {fileID: 452199883}
 --- !u!1001 &68932023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7823,18 +7824,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   job: farmer
-  farm: {fileID: 1991519576}
-  forest: {fileID: 1991519576}
-  mine: {fileID: 415006147}
   age: 0
   agent: {fileID: 0}
-  range: 0
-  centrePoint: {fileID: 1320663175}
+  resourcesToGive: 0
   hunger: 0
   _tired: 0
-  isOccupied: 0
   _home: 0
-  resourcesToGive: 0
+  range: 0
 --- !u!1001 &164381528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17910,11 +17906,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!4 &415006147 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4621419113959070603, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
-  m_PrefabInstance: {fileID: 96034648}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &416109124
 Mesh:
   m_ObjectHideFlags: 0
@@ -19607,8 +19598,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prosperity: 5
   _numberFood: 20
-  _numberWood: 0
-  _numberStone: 0
+  _numberWood: 10
+  _numberStone: 10
   foodMultiplicator: 1
   dayCounter: {fileID: 0}
   typeOfPnj: []
@@ -19618,6 +19609,10 @@ MonoBehaviour:
   homes: []
   school: {fileID: 0}
   _isSchoolCreate: 0
+  farm: {fileID: 0}
+  forest: {fileID: 0}
+  mine: {fileID: 0}
+  centrePoint: {fileID: 0}
 --- !u!4 &452199884
 Transform:
   m_ObjectHideFlags: 0
@@ -58277,11 +58272,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
---- !u!4 &1320663175 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4621419113959070603, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
-  m_PrefabInstance: {fileID: 1535986237}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1321827781
 Mesh:
   m_ObjectHideFlags: 0
@@ -89227,11 +89217,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
---- !u!4 &1991519576 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4621419113959070603, guid: e02c22fc0f4e6b44fbba46a98a337672, type: 3}
-  m_PrefabInstance: {fileID: 2055168092}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1993665465
 Mesh:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class Building : MonoBehaviour
     public List<int> cost; //order: wood, rock, mason
     
 
-    void Start()
+    public void UpdateBuildEffect()
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         switch (type)
