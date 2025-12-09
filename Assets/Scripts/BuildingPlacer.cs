@@ -16,6 +16,8 @@ public class BuildingPlacer : MonoBehaviour
     private bool isPlacing = false;
     private Renderer previewRenderer;
 
+    [SerializeField] private UIManager UI;
+
     [SerializeField] private GameManager gameManager;
 
     void Update()
@@ -90,6 +92,7 @@ public class BuildingPlacer : MonoBehaviour
         isPlacing = false; // Fin du placement
         gameManager._numberWood -= buildingData.cost[0];
         gameManager._numberStone -= buildingData.cost[1];
+        UI.UpdateResourceText();
         buildingData.UpdateBuildEffect();
     }
 }

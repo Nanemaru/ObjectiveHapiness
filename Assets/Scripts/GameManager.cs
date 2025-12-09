@@ -26,8 +26,6 @@ public class GameManager : MonoBehaviour
     public int _numberStone = 0;
     public int foodMultiplicator = 1;
     public float prosperity = 5f;
-    //Canvas management
-        [SerializeField] private TextMeshProUGUI dayCounter;
         
     //PNJ
     [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //script for prefab pnj
@@ -45,7 +43,7 @@ public class GameManager : MonoBehaviour
     public bool _isSchoolCreate = false;
     
     //Work Zone
-    public Transform farm;
+    public Transform bush;
     public Transform forest;
     public Transform mine;
     public Transform centrePoint;
