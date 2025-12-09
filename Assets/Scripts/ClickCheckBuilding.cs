@@ -12,7 +12,7 @@ public class ClickCheckBuilding : MonoBehaviour
 
     void Update()
     {
-        bool canBuild = gameManager._numberWood >= building.cost[0] && gameManager._numberStone >= building.cost[1] && gameManager._numberMason.Count >= building.cost[2];
+        bool canBuild = gameManager._numberWood >= building.cost[0] && gameManager._numberStone >= building.cost[1] && gameManager._numberMason >= building.cost[2];
         buildButton.interactable = canBuild;
     }
 }

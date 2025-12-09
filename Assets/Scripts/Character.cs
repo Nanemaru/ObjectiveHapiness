@@ -17,6 +17,8 @@ public class Character : MonoBehaviour
     private Transform _homePosition;
     private int _ageOfDeath;
     public int resourcesToGive = 0;
+
+    public string newJob;
     //Character state
     public bool hunger = false;
     public bool _tired = false;
@@ -63,7 +65,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void SetADestination(Transform destination)
+    public void SetADestination(Transform destination)
     {
         agent.SetDestination(destination.position);
     }
@@ -140,18 +142,55 @@ public class Character : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) //Check if pnj are in their workzone or home
     {
-        if (job != "wanderer" && other.CompareTag(job))
+        if (job != "wanderer") return;
+        if (job == "farmer" && other.CompareTag(job))
         {
             resourcesToGive += 3 * _gameManager.foodMultiplicator;
         }
-        
-        else if (other.transform == _homePosition)
+        else if (other.CompareTag(job))
+        {
+            resourcesToGive += 3;
+        }
+        if (other.transform == _homePosition)
         {
             _tired = false;
             StartCoroutine(PnjSleeping());
-            
+        }
+        else if (other.transform == _gameManager.school)
+        {
+            StartCoroutine(PnjSleeping());
+            job = newJob;
+            newJob = String.Empty;
+            ChangePnjAppearance();
+            if (job == "mason") _gameManager._numberMason++;
         }
     }
+
+    private void ChangePnjAppearance()
+    {
+        switch (job)
+        {
+            case "farmer":
+                GiveTheNewAppearance(_gameManager.farmerPrefab);
+                break;
+            case "lumberjack":
+                GiveTheNewAppearance(_gameManager.lumberjackPrefab);
+                break;
+            case "miner":
+                GiveTheNewAppearance(_gameManager.minerPrefab);
+                break;
+            case "mason":
+                GiveTheNewAppearance(_gameManager.masonPrefab);
+                break;
+        }
+    }
+
+    private void GiveTheNewAppearance(GameObject[] jobPrefab)
+    {
+        Destroy(this.transform.GetChild(0).gameObject);
+        GameObject newAppearance = Instantiate(jobPrefab[Random.Range(0, jobPrefab.Length)], this.transform, true);
+    }
+    
 
     private void FeedPnj()
     {
@@ -162,11 +201,13 @@ public class Character : MonoBehaviour
     private void KillPnj()
     {
         _gameManager.numberOfPnj--;
-        Destroy(gameObject);
         if (_gameManager.numberOfPnj <= 0) _gameManager.LoseGame();
+        if (job == "mason")  _gameManager._numberMason--;
+        Destroy(gameObject);
+        
     }
     
-    IEnumerator PnjSleeping() //Coroutine to let Pnj sleep before return to work
+    IEnumerator PnjSleeping() //Coroutine to let Pnj sleep before return to work, also use when pnj is in school for professional retraining
     {
         yield return new WaitForSeconds(5);
         SetupAgent();

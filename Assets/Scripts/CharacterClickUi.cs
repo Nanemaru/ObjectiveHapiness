@@ -10,8 +10,10 @@ public class CharacterClickUI : MonoBehaviour
     private Camera _cam;
     private Character _scriptCharacter;
 
+    private GameManager _gameManager;
     void Start()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _cam = Camera.main;
         jobUI.SetActive(false);
     }
@@ -49,7 +51,8 @@ public class CharacterClickUI : MonoBehaviour
     //Function who change the job of a character when they do a professional retraining
     public void GiveANewJob(string newWork)
     {
-        _scriptCharacter.job =  newWork;
+        _scriptCharacter.newJob =  newWork;
+        _scriptCharacter.SetADestination(_gameManager.school);
         jobUI.SetActive(false);
     }
 }

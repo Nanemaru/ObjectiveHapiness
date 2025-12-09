@@ -31,7 +31,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //script for prefab pnj
     [SerializeField] private GameObject wanderer;
     public int numberOfPnj = 4;
-    public List<GameObject> _numberMason = new List<GameObject>();
+    public int _numberMason = 1;
+    
+    public GameObject[] farmerPrefab =  new GameObject[2];
+    public GameObject[] lumberjackPrefab =  new GameObject[2];
+    public GameObject[] minerPrefab =  new GameObject[2];
+    public GameObject[] masonPrefab =  new GameObject[2];
     //Event
     public UnityEvent _eventUpdatePnj;
     public UnityEvent _eventPnjInResume;
