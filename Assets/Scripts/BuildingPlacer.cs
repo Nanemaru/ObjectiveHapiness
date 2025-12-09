@@ -57,7 +57,6 @@ public class BuildingPlacer : MonoBehaviour
 
             //Check collider
             bool canPlace = !Physics.CheckSphere(hit.point, checkRadius, buildingMask);
-
             previewRenderer.material = canPlace ? validMat : invalidMat;
         }
     }

@@ -8,59 +8,63 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalScale.x
-      value: 312.5
+      value: 3.8
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalScale.y
-      value: 150
+      value: 0.76
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalScale.z
-      value: 62.5
+      value: 1.8239999
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 458.3
+      value: 459.13617
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6
+      value: 0.011543274
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -154.9
+      value: -150.03745
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: -3.7493994e-33
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071067
+      value: -6.123234e-17
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000053385072
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000005338508
+      value: 6.123234e-17
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_Name
       value: School
       objectReference: {fileID: 0}
@@ -68,19 +72,19 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 375971d94005925439fbc8e23a903299, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -3668127344805890211}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 375971d94005925439fbc8e23a903299, type: 3}
+      addedObject: {fileID: -4177189066789138305}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2574938969754873838}
-  m_SourcePrefab: {fileID: 100100000, guid: 375971d94005925439fbc8e23a903299, type: 3}
+      addedObject: {fileID: -2348673063793394244}
+  m_SourcePrefab: {fileID: 100100000, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
 --- !u!1 &8702145182427414064 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 375971d94005925439fbc8e23a903299, type: 3}
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
   m_PrefabInstance: {fileID: 8360179809480557409}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-3668127344805890211
+--- !u!114 &-4177189066789138305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,7 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: School
   cost: 010000000100000001000000
---- !u!65 &2574938969754873838
+--- !u!65 &-2348673063793394244
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,5 +117,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.020699998, y: 0.02166666, z: 0.07999999}
-  m_Center: {x: -0.000049999915, y: -1.4807872e-19, z: 0.039999995}
+  m_Size: {x: 2.07, y: 8.000001, z: 2.1666667}
+  m_Center: {x: 0.004999995, y: 4.0000005, z: 1.323489e-23}
