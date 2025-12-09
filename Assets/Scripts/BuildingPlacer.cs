@@ -57,7 +57,7 @@ public class BuildingPlacer : MonoBehaviour
 
             // Vérification collisions
             bool canPlace = !Physics.CheckSphere(hit.point, checkRadius, buildingMask);
-
+            Debug.Log("test");
             previewRenderer.material = canPlace ? validMat : invalidMat;
         }
     }
@@ -65,7 +65,6 @@ public class BuildingPlacer : MonoBehaviour
     // Tentative de placement
     private void TryPlace()
     {
-        Debug.Log("test");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
