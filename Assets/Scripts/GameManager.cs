@@ -30,8 +30,13 @@ public class GameManager : MonoBehaviour
     //PNJ
     [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //script for prefab pnj
     [SerializeField] private GameObject wanderer;
-    //public List<Character> _numberPnjOnGame = new List<Character>();
-    public List<GameObject> _numberMason = new List<GameObject>();
+    public int numberOfPnj = 4;
+    public int _numberMason = 1;
+    
+    public GameObject[] farmerPrefab =  new GameObject[2];
+    public GameObject[] lumberjackPrefab =  new GameObject[2];
+    public GameObject[] minerPrefab =  new GameObject[2];
+    public GameObject[] masonPrefab =  new GameObject[2];
     //Event
     public UnityEvent _eventUpdatePnj;
     public UnityEvent _eventPnjInResume;
@@ -67,7 +72,7 @@ public class GameManager : MonoBehaviour
         
     }
     
-    private  void LoseGame() //Function call when all pnj are dead
+    public  void LoseGame() //Function call when all pnj are dead
     {
         Debug.Log("LoseGame");
     }
@@ -79,8 +84,6 @@ public class GameManager : MonoBehaviour
         UpdatePnj();
         uiManager.UpdateResourceText();
         uiManager.UpdateDayCounter();
-        //if (!FindAnyObjectByType<Character>()) LoseGame();
-        Debug.Log(FindAnyObjectByType<Character>());
     }
 
     private void UpdatePnj() //Function call to update pnj
@@ -109,6 +112,7 @@ public class GameManager : MonoBehaviour
         if  (_SecondForBirthCounter >= _numberSecondForABirth) //Create a wanderer each X seconds
         {
             Instantiate(wanderer);
+            numberOfPnj++;
             _SecondForBirthCounter = 0f;
         }
         if (_numberSecondOfDay > _dayDuration) NextDay();

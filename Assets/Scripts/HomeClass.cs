@@ -17,14 +17,4 @@ public class HomeClass : MonoBehaviour
         get => _numberBedLeft;
         set => _numberBedLeft = value;
     }
-
-    private void OnTriggerEnter(Collider other) //Disable pnj renderer when they're in their home
-    {
-        if (other.CompareTag("Character")) other.GetComponent<MeshRenderer>().enabled = false;
-    }
-    
-    private void OnTriggerExit(Collider other) //Enable pnj renderer when they're in their home
-    {
-        if (other.CompareTag("Character")) other.GetComponent<MeshRenderer>().enabled = false;
-    }
 }

@@ -5,14 +5,14 @@ using UnityEngine.EventSystems;
 
 public class BuildingPlacer : MonoBehaviour
 {
-    public LayerMask groundMask;          // Layer du sol
-    public LayerMask buildingMask;        // Layer des b�timents
-    public float checkRadius = 1f;        // Taille de la zone de v�rif
-    public Material validMat;             // Material vert
-    public Material invalidMat;           // Material rouge
+    public LayerMask groundMask;
+    public LayerMask buildingMask;
+    public float checkRadius = 1f;
+    public Material validMat;
+    public Material invalidMat;
 
-    private GameObject preview;           // Le ghost du b�timent
-    private Building buildingData;        // Les donn�es du b�timent
+    private GameObject preview;
+    private Building buildingData;
     private bool isPlacing = false;
     private Renderer previewRenderer;
 
@@ -22,7 +22,7 @@ public class BuildingPlacer : MonoBehaviour
 
     void Update()
     {
-        if (!isPlacing || preview == null)
+        if (!isPlacing || preview is null)
             return;
 
         FollowMouse();
@@ -33,7 +33,7 @@ public class BuildingPlacer : MonoBehaviour
         }
     }
 
-    // Lance le mode placement
+    // Launch Placement Mode
     public void StartPlacing(GameObject buildingPrefab, Building building)
     {
         buildingData = building;
@@ -41,14 +41,14 @@ public class BuildingPlacer : MonoBehaviour
         preview = Instantiate(buildingPrefab);
         previewRenderer = preview.GetComponentInChildren<Renderer>();
 
-        // D�sactive les collisions
+        // Deactivate colliders
         foreach (Collider c in preview.GetComponentsInChildren<Collider>())
             c.enabled = false;
 
         isPlacing = true;
     }
 
-    // Le ghost suit la souris
+    // Make building's ghost follow mouse
     private void FollowMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -57,13 +57,13 @@ public class BuildingPlacer : MonoBehaviour
         {
             preview.transform.position = hit.point;
 
-            // V�rification collisions
+            //Check collider
             bool canPlace = !Physics.CheckSphere(hit.point, checkRadius, buildingMask);
             previewRenderer.material = canPlace ? validMat : invalidMat;
         }
     }
 
-    // Tentative de placement
+    // Try to place the building
     private void TryPlace()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -71,25 +71,22 @@ public class BuildingPlacer : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
         {
             bool blocked = Physics.CheckSphere(hit.point, checkRadius, buildingMask);
-
-            if (!blocked)
-            {
-                PlaceBuilding(hit.point);
-            }
+            if (!blocked) PlaceBuilding(hit.point);
         }
     }
 
+    //Place Building
     private void PlaceBuilding(Vector3 position)
     {
-        // Cr�ation du vrai b�timent
+        // Create real building
         GameObject finalBuilding = Instantiate(preview, position, preview.transform.rotation);
 
-        // R�active les collisions
+        // Activate collider
         foreach (Collider c in finalBuilding.GetComponentsInChildren<Collider>())
             c.enabled = true;
 
-        Destroy(preview);  // Supprime le ghost
-        isPlacing = false; // Fin du placement
+        Destroy(preview);  // Destroy building's ghost
+        isPlacing = false; //End of placement
         gameManager._numberWood -= buildingData.cost[0];
         gameManager._numberStone -= buildingData.cost[1];
         UI.UpdateResourceText();
