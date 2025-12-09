@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
         _SecondForBirthCounter += Time.deltaTime;
         if  (_SecondForBirthCounter >= _numberSecondForABirth) //Create a wanderer each X seconds
         {
-            Instantiate(wanderer);
+            Instantiate(wanderer, centrePoint);
             numberOfPnj++;
             _SecondForBirthCounter = 0f;
         }
