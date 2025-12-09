@@ -57,7 +57,6 @@ public class BuildingPlacer : MonoBehaviour
 
             // V�rification collisions
             bool canPlace = !Physics.CheckSphere(hit.point, checkRadius, buildingMask);
-            Debug.Log("test");
             previewRenderer.material = canPlace ? validMat : invalidMat;
         }
     }
