@@ -28,6 +28,10 @@ public class Building : MonoBehaviour
             case "Museum":
                 _gameManager.prosperity += 2;
                 break;
+            case "School":
+                _gameManager.school = gameObject.transform;
+                _gameManager._isSchoolCreate =  true;
+                break;
         }
     }
 }
