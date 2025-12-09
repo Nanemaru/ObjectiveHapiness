@@ -187,8 +187,12 @@ public class Character : MonoBehaviour
 
     private void GiveTheNewAppearance(GameObject[] jobPrefab)
     {
-        Destroy(this.transform.GetChild(0).gameObject);
+        GameObject OldAppearance = this.transform.GetChild(0).gameObject;
+        Quaternion Rotation = OldAppearance.transform.rotation;
+        Rotation.y += 180;
+        Destroy(OldAppearance);
         GameObject newAppearance = Instantiate(jobPrefab[Random.Range(0, jobPrefab.Length)], this.transform, true);
+        newAppearance.transform.rotation = Rotation;
     }
     
 

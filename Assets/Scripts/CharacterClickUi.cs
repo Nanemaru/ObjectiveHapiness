@@ -41,10 +41,13 @@ public class CharacterClickUI : MonoBehaviour
     //When a character is chosen for professional retraining, put the button of his work not interactable
     private void EnabledAllWorkButtonExceptOne(string work)
     {
-        foreach (Transform child in jobUI.transform)
+        if (_gameManager._isSchoolCreate)
         {
-            Button button = child.GetComponent<Button>();
-            button.interactable = child.gameObject.name != work;
+            foreach (Transform child in jobUI.transform)
+            {
+                Button button = child.GetComponent<Button>();
+                button.interactable = child.gameObject.name != work;
+            }
         }
     }
     
