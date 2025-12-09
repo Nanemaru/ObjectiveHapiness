@@ -8,10 +8,9 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     //Time management
-    public float _prosperity = 5f;
     private float _dayDuration = 20f; //Set the duration in seconds of a day 
     private float _numberSecondOfDay = 0f;
-    private int _numberDay = 1;
+    public int numberDay = 1;
     private bool _isOnPlay = true; //Value to use to put game in resume
     private float _numberSecondForABirth = 30f;
     private float _SecondForBirthCounter;
@@ -26,6 +25,7 @@ public class GameManager : MonoBehaviour
     public int _numberWood = 0;
     public int _numberStone = 0;
     public int foodMultiplicator = 1;
+    public float prosperity = 5f;
     //Canvas management
         [SerializeField] private TextMeshProUGUI dayCounter;
         
@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     //Event
     public UnityEvent _eventUpdatePnj;
     public UnityEvent _eventPnjInResume;
+    
     //Buildings
     public List<HomeClass> homes = new List<HomeClass>();
 
@@ -48,6 +49,8 @@ public class GameManager : MonoBehaviour
     public Transform forest;
     public Transform mine;
     public Transform centrePoint;
+    
+    [SerializeField] private UIManager uiManager;
     /*void Start()
     {
        UpdateDayCounter(); //Put text in unity directly so it doesn't need to be call at start
@@ -74,21 +77,24 @@ public class GameManager : MonoBehaviour
     private void NextDay() //Function call to pass to next day
     {
         _numberSecondOfDay = 0f;
-        _numberDay++;
-        //UpdateResources();
+        numberDay++;
         UpdatePnj();
-        UpdateDayCounter();
+        uiManager.UpdateResourceText();
+        uiManager.UpdateDayCounter();
+        //if (!FindAnyObjectByType<Character>()) LoseGame();
+        Debug.Log(FindAnyObjectByType<Character>());
     }
 
     private void UpdatePnj() //Function call to update pnj
     {
         _eventUpdatePnj.Invoke();
-        if (!FindAnyObjectByType<Character>()) LoseGame();
     }
     public void UpdateProsperity(float value) //Function call to update prosperity with positive or negative value
     {
-        _prosperity += value;
-        if (_prosperity < 0) _prosperity = 0f;
+        prosperity += value;
+        if (prosperity < 0) prosperity = 0f;
+        uiManager.UpdateSliderProsperity(prosperity);
+        if (prosperity >= 100) WinGame();
     }
 
     public void Resume() //Put game from play to resume and vice versa
@@ -98,82 +104,16 @@ public class GameManager : MonoBehaviour
         _eventPnjInResume.Invoke();
     }
 
-    private void UpdateDayCounter()
-    {
-        dayCounter.text = "Day " + _numberDay;
-    }
-
     private void UpdateTimeAndDay()
     {
         _numberSecondOfDay  += Time.deltaTime;
         _SecondForBirthCounter += Time.deltaTime;
-        if  (_SecondForBirthCounter >= _numberSecondForABirth)
+        if  (_SecondForBirthCounter >= _numberSecondForABirth) //Create a wanderer each X seconds
         {
             Instantiate(wanderer);
             _SecondForBirthCounter = 0f;
         }
         if (_numberSecondOfDay > _dayDuration) NextDay();
     }
-
-
-    /*private void CreateBuilding(GameObject building, Transform positionOfBuilding, int numberOfMasonNeeded) //Give work to mason when a building is create
-    {
-        for (int i = 0; i < numberOfMasonNeeded; i++)
-        {
-            Character pnj = _numberMason[i].GetComponent<Character>();
-            if (!pnj.isOccupied)
-            {
-                pnj.isOccupied = true;
-                pnj.agent.SetDestination(positionOfBuilding.position);
-            }
-        }
-        //Instantiate(building, positionOfBuilding.position, building.transform.rotation); //Faire en sorte que ça se fasse au bout de X temps
-        //UpdateProsperity(); if Bookstore or Museum
-    }*/
-
-    /*private void CreateHome(GameObject home)
-    {
-        Instantiate(home);
-        homes.Add(home);
-    }*/
-
-    /*private void NourrishPnj()
-    {
-        if (_numberFood < _numberPnjOnGame.Count)
-        {
-            int numberPnjToKill = Math.Abs(_numberFood - _numberPnjOnGame.Count);
-            _numberFood = 0;
-            MakeRandomPnjHungry(numberPnjToKill);
-        }
-        else _numberFood -= _numberPnjOnGame.Count;
-    }*/
-
-    /*private void MakeRandomPnjHungry(int numberToKill)  //Function call if there is more pnj than food so some will not be able to eat
-    {
-        for (int i = 0; i < numberToKill; i++)
-        {
-            int rand = Random.Range(0, _numberPnjOnGame .Count - 1);
-            _numberPnjOnGame[rand].hunger = true;
-        }
-    }*/
-
-    /*private void UpdateResources()
-    {
-        foreach (var character in _numberPnjOnGame)
-        {
-            switch (character.job)
-            {
-                case "farmer":
-                    _numberFood += character.resourcesToGive;
-                    break;
-                case "lumberjack":
-                    _numberWood +=  character.resourcesToGive;
-                    break;
-                case "miner":
-                    _numberStone  += character.resourcesToGive;
-                    break;
-            }
-            character.resourcesToGive = 0;
-        }
-    }*/
+    
 }

@@ -10,6 +10,14 @@ public class HomeClass : MonoBehaviour
         set => _isAvailable = value;
     }
 
+    private int _numberBedLeft = 4;
+
+    public int NumberBedLeft
+    {
+        get => _numberBedLeft;
+        set => _numberBedLeft = value;
+    }
+
     private void OnTriggerEnter(Collider other) //Disable pnj renderer when they're in their home
     {
         if (other.CompareTag("Character")) other.GetComponent<MeshRenderer>().enabled = false;

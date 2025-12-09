@@ -49,10 +49,16 @@ public class Character : MonoBehaviour
         {
             if (home.IsAvailable)
             {
-                home.IsAvailable = false;
+                home.NumberBedLeft--;
                 _home = true;
                 _homePosition = home.transform;
                 break;
+            }
+
+            if (home.NumberBedLeft <= 0)
+            {
+                home.NumberBedLeft = 0;
+                home.IsAvailable = false;
             }
         }
     }
@@ -64,10 +70,11 @@ public class Character : MonoBehaviour
 
     private void CheckIfPnjStillAlive()
     {
+        UpdateResources();
         age++;
         if (age == _ageOfDeath)
         {
-            gameObject.GetComponent<HomeClass>().IsAvailable = true;
+            gameObject.GetComponent<HomeClass>().NumberBedLeft++;
             Destroy(gameObject);
         }
         NourrishPnj();
@@ -161,5 +168,22 @@ public class Character : MonoBehaviour
     private void PutPnjInResume()
     {
         agent.isStopped = _gameManager.IsOnPlay;
+    }
+    
+    private void UpdateResources()
+    {
+        switch (job)
+        {
+            case "farmer":
+                _gameManager._numberFood += resourcesToGive;
+                break;
+            case "lumberjack":
+                _gameManager._numberWood += resourcesToGive;
+                break;
+            case "miner":
+                _gameManager._numberStone  += resourcesToGive;
+                break;
+        }
+        resourcesToGive = 0;
     }
 }
