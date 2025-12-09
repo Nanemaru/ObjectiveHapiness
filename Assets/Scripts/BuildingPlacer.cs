@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 public class BuildingPlacer : MonoBehaviour
 {
     public LayerMask groundMask;          // Layer du sol
-    public LayerMask buildingMask;        // Layer des bâtiments
-    public float checkRadius = 1f;        // Taille de la zone de vérif
+    public LayerMask buildingMask;        // Layer des bï¿½timents
+    public float checkRadius = 1f;        // Taille de la zone de vï¿½rif
     public Material validMat;             // Material vert
     public Material invalidMat;           // Material rouge
 
-    private GameObject preview;           // Le ghost du bâtiment
-    private Building buildingData;        // Les données du bâtiment
+    private GameObject preview;           // Le ghost du bï¿½timent
+    private Building buildingData;        // Les donnï¿½es du bï¿½timent
     private bool isPlacing = false;
     private Renderer previewRenderer;
 
@@ -39,7 +39,7 @@ public class BuildingPlacer : MonoBehaviour
         preview = Instantiate(buildingPrefab);
         previewRenderer = preview.GetComponentInChildren<Renderer>();
 
-        // Désactive les collisions
+        // Dï¿½sactive les collisions
         foreach (Collider c in preview.GetComponentsInChildren<Collider>())
             c.enabled = false;
 
@@ -55,9 +55,9 @@ public class BuildingPlacer : MonoBehaviour
         {
             preview.transform.position = hit.point;
 
-            // Vérification collisions
+            // Vï¿½rification collisions
             bool canPlace = !Physics.CheckSphere(hit.point, checkRadius, buildingMask);
-
+            Debug.Log("test");
             previewRenderer.material = canPlace ? validMat : invalidMat;
         }
     }
@@ -65,7 +65,6 @@ public class BuildingPlacer : MonoBehaviour
     // Tentative de placement
     private void TryPlace()
     {
-        Debug.Log("test");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
@@ -81,10 +80,10 @@ public class BuildingPlacer : MonoBehaviour
 
     private void PlaceBuilding(Vector3 position)
     {
-        // Création du vrai bâtiment
+        // Crï¿½ation du vrai bï¿½timent
         GameObject finalBuilding = Instantiate(preview, position, preview.transform.rotation);
 
-        // Réactive les collisions
+        // Rï¿½active les collisions
         foreach (Collider c in finalBuilding.GetComponentsInChildren<Collider>())
             c.enabled = true;
 

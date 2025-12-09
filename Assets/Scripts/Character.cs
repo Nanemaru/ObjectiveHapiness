@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class Character : MonoBehaviour
 {
     private GameManager _gameManager;
+
+    private UnityEvent eventAge;
     //Character Data
     public string job = "wanderer";
     public int age = 0;
@@ -23,20 +26,20 @@ public class Character : MonoBehaviour
     public float range;
     void Start()
     {
-        _gameManager = FindObjectOfType<GameManager>();
         agent = GetComponent<NavMeshAgent>();
         _ageOfDeath = Random.Range(8, 12);
+        _gameManager = FindObjectOfType<GameManager>();
+        _gameManager._eventUpdatePnj.AddListener(CheckIfPnjStillAlive);
+        _gameManager._eventPnjInResume.AddListener(PutPnjInResume);
         CheckAHomeAvailable();
         SetupAgent();
     }
     void Update()
     {
-        if (job == "wanderer" || _tired)
+        if (agent.remainingDistance <= agent.stoppingDistance) //Make pnj wander as long as they're tired ou wanderer
         {
-            if (agent.remainingDistance <= agent.stoppingDistance) //Make pnj wander as long as they're tired ou wanderer
-            {
-                MakePnjWander();
-            }
+            if (job == "wanderer") MakePnjWander();
+            else if (_tired) CheckAHomeAvailable();
         }
     }
     private void CheckAHomeAvailable()
@@ -46,10 +49,16 @@ public class Character : MonoBehaviour
         {
             if (home.IsAvailable)
             {
-                home.IsAvailable = false;
+                home.NumberBedLeft--;
                 _home = true;
                 _homePosition = home.transform;
                 break;
+            }
+
+            if (home.NumberBedLeft <= 0)
+            {
+                home.NumberBedLeft = 0;
+                home.IsAvailable = false;
             }
         }
     }
@@ -59,16 +68,20 @@ public class Character : MonoBehaviour
         agent.SetDestination(destination.position);
     }
 
-    public void CheckIfPnjStillAlive()
+    private void CheckIfPnjStillAlive()
     {
-        if (hunger || age == _ageOfDeath)
+        UpdateResources();
+        age++;
+        if (age == _ageOfDeath)
         {
-            _gameManager._numberPnjOnGame.Remove(this);
+            gameObject.GetComponent<HomeClass>().NumberBedLeft++;
             Destroy(gameObject);
         }
+        NourrishPnj();
+        PnjTired();
     }
 
-    public void PnjTired() //Function when Pnj is Tired
+    private void PnjTired() //Function when Pnj is Tired
     {
         if (job == "wanderer") return;
         else _tired = true;
@@ -86,7 +99,6 @@ public class Character : MonoBehaviour
             MakePnjWander();
         }
         _gameManager.UpdateProsperity(prosperityToAdd);
-        
     }
 
     private void SetupAgent() //Give A destination to pnj based on their job
@@ -140,10 +152,38 @@ public class Character : MonoBehaviour
             
         }
     }
+
+    private void NourrishPnj()
+    {
+        if (_gameManager._numberFood > 1) _gameManager._numberFood--;
+        else if  (_gameManager._numberFood == 0) Destroy(gameObject);
+    }
     
     IEnumerator PnjSleeping() //Coroutine to let Pnj sleep before return to work
     {
         yield return new WaitForSeconds(5);
         SetupAgent();
+    }
+    
+    private void PutPnjInResume()
+    {
+        agent.isStopped = _gameManager.IsOnPlay;
+    }
+    
+    private void UpdateResources()
+    {
+        switch (job)
+        {
+            case "farmer":
+                _gameManager._numberFood += resourcesToGive;
+                break;
+            case "lumberjack":
+                _gameManager._numberWood += resourcesToGive;
+                break;
+            case "miner":
+                _gameManager._numberStone  += resourcesToGive;
+                break;
+        }
+        resourcesToGive = 0;
     }
 }

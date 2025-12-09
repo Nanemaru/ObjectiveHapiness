@@ -23,10 +23,10 @@ public class Building : MonoBehaviour
                 _gameManager.foodMultiplicator += 1;
                 break;
             case "Library":
-                _gameManager._prosperity += 1;
+                _gameManager.prosperity += 1;
                 break;
             case "Museum":
-                _gameManager._prosperity += 2;
+                _gameManager.prosperity += 2;
                 break;
         }
     }
