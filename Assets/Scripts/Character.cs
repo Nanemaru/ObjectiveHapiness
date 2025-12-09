@@ -106,7 +106,7 @@ public class Character : MonoBehaviour
         switch (job)
         {
             case "farmer":
-                SetADestination(_gameManager.farm);
+                SetADestination(_gameManager.bush);
                 break;
             case "lumberjack":
                 SetADestination(_gameManager.forest);

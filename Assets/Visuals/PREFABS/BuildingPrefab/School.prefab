@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 459.13617
+      value: 458.36664
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.011543274
+      value: 0.011537679
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -150.03745
+      value: -151.43013
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_LocalRotation.w
@@ -67,6 +67,18 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
       propertyPath: m_Name
       value: School
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5335334779685340903, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5756808865816974665, guid: ac3b52720f1d3204fbe7a35b62bf6576, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -117,5 +129,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.07, y: 8.000001, z: 2.1666667}
+  m_Size: {x: 3.5, y: 8.000001, z: 2.1666667}
   m_Center: {x: 0.004999995, y: 4.0000005, z: 1.323489e-23}
