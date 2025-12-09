@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     //PNJ
     [SerializeField] private List<GameObject> typeOfPnj = new List<GameObject>(); //script for prefab pnj
     [SerializeField] private GameObject wanderer;
-    //public List<Character> _numberPnjOnGame = new List<Character>();
+    public int numberOfPnj = 4;
     public List<GameObject> _numberMason = new List<GameObject>();
     //Event
     public UnityEvent _eventUpdatePnj;
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         
     }
     
-    private  void LoseGame() //Function call when all pnj are dead
+    public  void LoseGame() //Function call when all pnj are dead
     {
         Debug.Log("LoseGame");
     }
@@ -81,8 +81,6 @@ public class GameManager : MonoBehaviour
         UpdatePnj();
         uiManager.UpdateResourceText();
         uiManager.UpdateDayCounter();
-        //if (!FindAnyObjectByType<Character>()) LoseGame();
-        Debug.Log(FindAnyObjectByType<Character>());
     }
 
     private void UpdatePnj() //Function call to update pnj
@@ -111,6 +109,7 @@ public class GameManager : MonoBehaviour
         if  (_SecondForBirthCounter >= _numberSecondForABirth) //Create a wanderer each X seconds
         {
             Instantiate(wanderer);
+            numberOfPnj++;
             _SecondForBirthCounter = 0f;
         }
         if (_numberSecondOfDay > _dayDuration) NextDay();

@@ -13,7 +13,7 @@ public class Building : MonoBehaviour
 
     public void UpdateBuildEffect()
     {
-        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _gameManager = FindObjectOfType<GameManager>();
         switch (type)
         {
             case "Home":

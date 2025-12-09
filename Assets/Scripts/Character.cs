@@ -75,9 +75,9 @@ public class Character : MonoBehaviour
         if (age == _ageOfDeath)
         {
             gameObject.GetComponent<HomeClass>().NumberBedLeft++;
-            Destroy(gameObject);
+            KillPnj();
         }
-        NourrishPnj();
+        FeedPnj();
         PnjTired();
     }
 
@@ -140,7 +140,7 @@ public class Character : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) //Check if pnj are in their workzone or home
     {
-        if (other.CompareTag(job))
+        if (job != "wanderer" && other.CompareTag(job))
         {
             resourcesToGive += 3 * _gameManager.foodMultiplicator;
         }
@@ -153,10 +153,17 @@ public class Character : MonoBehaviour
         }
     }
 
-    private void NourrishPnj()
+    private void FeedPnj()
     {
         if (_gameManager._numberFood > 1) _gameManager._numberFood--;
-        else if  (_gameManager._numberFood == 0) Destroy(gameObject);
+        else if (_gameManager._numberFood == 0) KillPnj();
+    }
+
+    private void KillPnj()
+    {
+        _gameManager.numberOfPnj--;
+        Destroy(gameObject);
+        if (_gameManager.numberOfPnj <= 0) _gameManager.LoseGame();
     }
     
     IEnumerator PnjSleeping() //Coroutine to let Pnj sleep before return to work
