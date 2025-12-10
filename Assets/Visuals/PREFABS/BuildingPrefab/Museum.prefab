@@ -129,5 +129,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180bcd669ad8dd742b6c03df2a883756, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 
-  cost: 010000000100000001000000
+  type: Museum
+  cost: 070000000f00000005000000

@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: School
-  cost: 010000000100000001000000
+  cost: 020000000500000001000000
 --- !u!65 &-2348673063793394244
 BoxCollider:
   m_ObjectHideFlags: 0
