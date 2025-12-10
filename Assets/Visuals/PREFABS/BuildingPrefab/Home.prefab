@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: Home
-  cost: 030000000200000001000000
+  cost: 020000000200000001000000
 --- !u!65 &-4375870274593308293
 BoxCollider:
   m_ObjectHideFlags: 0
