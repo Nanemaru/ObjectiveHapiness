@@ -200,6 +200,7 @@ public class Character : MonoBehaviour
         Rotation.y += 180;
         Destroy(OldAppearance);
         GameObject newAppearance = Instantiate(jobPrefab[Random.Range(0, jobPrefab.Length)], this.transform, true);
+        newAppearance.transform.position = this.transform.position;
         newAppearance.transform.rotation = Rotation;
     }
     
@@ -234,7 +235,6 @@ public class Character : MonoBehaviour
     IEnumerator PnjLearning() //Coroutine to let pnj being in school for professional retraining
     {
         yield return new WaitForSeconds(5);
-        Debug.Log("aa");
         job = newJob;
         newJob = String.Empty;
         ChangePnjAppearance();
