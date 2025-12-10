@@ -146,7 +146,7 @@ public class Character : MonoBehaviour
                 resourcesToGive += 3 * _gameManager.foodMultiplicator;
                 break;
             default:
-            {
+            { 
                 if (other.CompareTag(job)) resourcesToGive += 3;
                 break;
             }
