@@ -20,7 +20,10 @@ public class CharacterClickUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) &&  !EventSystem.current.IsPointerOverGameObject()) DetectCharacterClick();
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            DetectCharacterClick();
+        }
     }
 
     void DetectCharacterClick()
@@ -45,8 +48,11 @@ public class CharacterClickUI : MonoBehaviour
         {
             foreach (Transform child in jobUI.transform)
             {
-                Button button = child.GetComponent<Button>();
-                button.interactable = child.gameObject.name != work;
+                if (child.GetComponent<Button>())
+                {
+                    Button button = child.GetComponent<Button>();
+                    button.interactable = child.gameObject.name != work;
+                }
             }
         }
     }
@@ -54,6 +60,7 @@ public class CharacterClickUI : MonoBehaviour
     //Function who change the job of a character when they do a professional retraining
     public void GiveANewJob(string newWork)
     {
+        Debug.Log(_scriptCharacter.name);
         _scriptCharacter.newJob =  newWork;
         _scriptCharacter.SetADestination(_gameManager.school);
         jobUI.SetActive(false);
