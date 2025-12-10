@@ -198,8 +198,15 @@ public class Character : MonoBehaviour
 
     private void FeedPnj()
     {
-        if (_gameManager._numberFood > 1) _gameManager._numberFood--;
-        else if (_gameManager._numberFood == 0) KillPnj();
+        switch (_gameManager._numberFood)
+        {
+            case >= 1:
+                _gameManager._numberFood--;
+                break;
+            case 0:
+                KillPnj();
+                break;
+        }
     }
 
     private void KillPnj()

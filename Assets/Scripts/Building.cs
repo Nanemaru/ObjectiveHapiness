@@ -9,7 +9,7 @@ public class Building : MonoBehaviour
     //Data
     public string type;
     public List<int> cost; //order: wood, rock, mason
-    
+    private int prosperityToAdd;
 
     public void UpdateBuildEffect()
     {
@@ -23,10 +23,12 @@ public class Building : MonoBehaviour
                 _gameManager.foodMultiplicator += 1;
                 break;
             case "Library":
-                _gameManager.prosperity += 1;
+                prosperityToAdd = 1;
+                _gameManager.UpdateProsperity(prosperityToAdd);
                 break;
             case "Museum":
-                _gameManager.prosperity += 2;
+                prosperityToAdd = 2;
+                _gameManager.UpdateProsperity(prosperityToAdd);
                 break;
             case "School":
                 _gameManager.school = gameObject.transform;

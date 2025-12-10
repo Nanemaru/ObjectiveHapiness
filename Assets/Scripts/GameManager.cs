@@ -81,14 +81,9 @@ public class GameManager : MonoBehaviour
     {
         _numberSecondOfDay = 0f;
         numberDay++;
-        UpdatePnj();
+        _eventUpdatePnj.Invoke();
         uiManager.UpdateResourceText();
         uiManager.UpdateDayCounter();
-    }
-
-    private void UpdatePnj() //Function call to update pnj
-    {
-        _eventUpdatePnj.Invoke();
     }
     public void UpdateProsperity(float value) //Function call to update prosperity with positive or negative value
     {
