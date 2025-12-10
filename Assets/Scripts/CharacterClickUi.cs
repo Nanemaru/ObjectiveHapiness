@@ -60,8 +60,8 @@ public class CharacterClickUI : MonoBehaviour
     //Function who change the job of a character when they do a professional retraining
     public void GiveANewJob(string newWork)
     {
-        Debug.Log(_scriptCharacter.name);
         _scriptCharacter.newJob =  newWork;
+        _scriptCharacter.goingToSchool = true;
         _scriptCharacter.SetADestination(_gameManager.school);
         jobUI.SetActive(false);
     }

@@ -91,5 +91,6 @@ public class BuildingPlacer : MonoBehaviour
         gameManager._numberStone -= buildingData.cost[1];
         UI.UpdateResourceText();
         buildingData.UpdateBuildEffect();
+        gameManager.school = finalBuilding.transform;
     }
 }

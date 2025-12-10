@@ -21,8 +21,9 @@ public class Character : MonoBehaviour
     public string newJob;
     //Character state
     public bool hunger = false;
-    public bool _tired = false;
-    public bool _home = false;
+    private bool _tired = false;
+    private bool _home = false;
+    public bool goingToSchool = false;
     //Value for mouvement
     private Vector3 _destinationWhenResume;
     public float range;
@@ -38,7 +39,7 @@ public class Character : MonoBehaviour
     }
     void Update()
     {
-        if (agent.remainingDistance <= agent.stoppingDistance) //Make pnj wander as long as they're tired ou wanderer
+        if (agent.remainingDistance <= agent.stoppingDistance && !goingToSchool) //Make pnj wander as long as they're tired, wanderer, and not going to school
         {
             if (job == "wanderer") MakePnjWander();
             else if (_tired) CheckAHomeAvailable();
@@ -142,27 +143,34 @@ public class Character : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) //Check if pnj are in their workzone or home
     {
-        if (job != "wanderer") return;
-        if (job == "farmer" && other.CompareTag(job))
+        switch (job)
         {
-            resourcesToGive += 3 * _gameManager.foodMultiplicator;
+            case "wanderer":
+                break;
+            case "farmer" when other.CompareTag(job):
+                resourcesToGive += 3 * _gameManager.foodMultiplicator;
+                break;
+            default:
+            {
+                if (other.CompareTag(job))
+                {
+                    resourcesToGive += 3;
+                }
+
+                break;
+            }
         }
-        else if (other.CompareTag(job))
-        {
-            resourcesToGive += 3;
-        }
-        if (other.transform == _homePosition)
+
+        if (job != "wanderer" && other.transform == _homePosition)
         {
             _tired = false;
             StartCoroutine(PnjSleeping());
         }
         else if (other.transform == _gameManager.school)
         {
-            StartCoroutine(PnjSleeping());
-            job = newJob;
-            newJob = String.Empty;
-            ChangePnjAppearance();
-            if (job == "mason") _gameManager._numberMason++;
+            Debug.Log("bbb");
+            StartCoroutine(PnjLearning());
+            
         }
     }
 
@@ -221,6 +229,17 @@ public class Character : MonoBehaviour
     IEnumerator PnjSleeping() //Coroutine to let Pnj sleep before return to work, also use when pnj is in school for professional retraining
     {
         yield return new WaitForSeconds(5);
+        SetupAgent();
+    }
+    IEnumerator PnjLearning() //Coroutine to let pnj being in school for professional retraining
+    {
+        yield return new WaitForSeconds(5);
+        Debug.Log("aa");
+        job = newJob;
+        newJob = String.Empty;
+        ChangePnjAppearance();
+        if (job == "mason") _gameManager._numberMason++;
+        goingToSchool = false;
         SetupAgent();
     }
     
