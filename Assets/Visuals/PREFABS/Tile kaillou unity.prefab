@@ -3011,7 +3011,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4298930558698057686}
   m_Layer: 0
-  m_Name: 'Tile kaillou unity '
+  m_Name: Tile kaillou unity
   m_TagString: miner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
