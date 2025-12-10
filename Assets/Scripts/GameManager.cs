@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     //Time management
-    private float _dayDuration = 20f; //Set the duration in seconds of a day 
+    private float _dayDuration = 60f; //Set the duration in seconds of a day 
     private float _numberSecondOfDay = 0f;
     public int numberDay = 1;
     private bool _isOnPlay = true; //Value to use to put game in resume

@@ -8,6 +8,7 @@ TagManager:
   - farmer
   - Home
   - lumberjack
+  - miner
   layers:
   - Default
   - TransparentFX

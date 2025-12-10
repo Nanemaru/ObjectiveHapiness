@@ -10,7 +10,7 @@ public class HomeClass : MonoBehaviour
         set => _isAvailable = value;
     }
 
-    private int _numberBedLeft = 4;
+    private int _numberBedLeft = 2;
 
     public int NumberBedLeft
     {
