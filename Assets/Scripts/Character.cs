@@ -55,13 +55,8 @@ public class Character : MonoBehaviour
                 home.NumberBedLeft--;
                 _home = true;
                 _homePosition = home.transform;
+                if (home.NumberBedLeft == 0) home.IsAvailable = false;
                 break;
-            }
-
-            if (home.NumberBedLeft <= 0)
-            {
-                home.NumberBedLeft = 0;
-                home.IsAvailable = false;
             }
         }
     }
@@ -96,7 +91,7 @@ public class Character : MonoBehaviour
             prosperityToAdd = 2f;
             _tired = false;
         }
-        else //If pnj doesn't find a home it wander until it find a home available
+        else //If pnj doesn't find a home they wander until it find a home available
         {
             prosperityToAdd = -3f;
             MakePnjWander();
@@ -152,26 +147,12 @@ public class Character : MonoBehaviour
                 break;
             default:
             {
-                if (other.CompareTag(job))
-                {
-                    resourcesToGive += 3;
-                }
-
+                if (other.CompareTag(job)) resourcesToGive += 3;
                 break;
             }
         }
-
-        if (job != "wanderer" && other.transform == _homePosition)
-        {
-            _tired = false;
-            StartCoroutine(PnjSleeping());
-        }
-        else if (other.transform == _gameManager.school)
-        {
-            Debug.Log("bbb");
-            StartCoroutine(PnjLearning());
-            
-        }
+        if (job != "wanderer" && other.transform == _homePosition) StartCoroutine(PnjSleeping());
+        else if (other.transform == _gameManager.school) StartCoroutine(PnjLearning());
     }
 
     private void ChangePnjAppearance()
@@ -200,6 +181,7 @@ public class Character : MonoBehaviour
         Rotation.y += 180;
         Destroy(OldAppearance);
         GameObject newAppearance = Instantiate(jobPrefab[Random.Range(0, jobPrefab.Length)], this.transform, true);
+        newAppearance.transform.position = this.transform.position;
         newAppearance.transform.rotation = Rotation;
     }
     
@@ -221,20 +203,19 @@ public class Character : MonoBehaviour
     {
         _gameManager.numberOfPnj--;
         if (_gameManager.numberOfPnj <= 0) _gameManager.LoseGame();
-        if (job == "mason")  _gameManager._numberMason--;
+        if (job == "mason") _gameManager._numberMason--;
         Destroy(gameObject);
-        
     }
     
     IEnumerator PnjSleeping() //Coroutine to let Pnj sleep before return to work, also use when pnj is in school for professional retraining
     {
         yield return new WaitForSeconds(5);
+        _tired = false;
         SetupAgent();
     }
     IEnumerator PnjLearning() //Coroutine to let pnj being in school for professional retraining
     {
         yield return new WaitForSeconds(5);
-        Debug.Log("aa");
         job = newJob;
         newJob = String.Empty;
         ChangePnjAppearance();
