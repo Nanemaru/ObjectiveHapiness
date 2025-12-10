@@ -31,6 +31,7 @@ public class Building : MonoBehaviour
                 _gameManager.UpdateProsperity(prosperityToAdd);
                 break;
             case "School":
+                _gameManager.school = transform;
                 _gameManager._isSchoolCreate =  true;
                 break;
         }

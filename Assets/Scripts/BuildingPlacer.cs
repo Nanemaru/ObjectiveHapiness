@@ -80,7 +80,7 @@ public class BuildingPlacer : MonoBehaviour
     {
         // Create real building
         GameObject finalBuilding = Instantiate(preview, position, preview.transform.rotation);
-
+        buildingData = finalBuilding.GetComponent<Building>();
         // Activate collider
         foreach (Collider c in finalBuilding.GetComponentsInChildren<Collider>())
             c.enabled = true;
@@ -91,6 +91,5 @@ public class BuildingPlacer : MonoBehaviour
         gameManager._numberStone -= buildingData.cost[1];
         UI.UpdateResourceText();
         buildingData.UpdateBuildEffect();
-        gameManager.school = finalBuilding.transform;
     }
 }
