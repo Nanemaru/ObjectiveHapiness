@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8179945436492521625}
   m_Layer: 0
   m_Name: Chara-vagabon
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   hunger: 0
   _tired: 0
   _home: 0
-  range: 25
+  range: 50
 --- !u!54 &1290940952019752745
 Rigidbody:
   m_ObjectHideFlags: 0
