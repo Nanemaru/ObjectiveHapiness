@@ -7,7 +7,6 @@ public class CharacterClickUI : MonoBehaviour
     public GameObject jobUI;
     private Camera _cam;
     private Character _scriptCharacter;
-
     private GameManager _gameManager;
     void Start()
     {

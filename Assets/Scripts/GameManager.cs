@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public GameObject[] lumberjackPrefab =  new GameObject[2];
     public GameObject[] minerPrefab =  new GameObject[2];
     public GameObject[] masonPrefab =  new GameObject[2];
+    
+    private readonly Vector3 _positionSpawn = new Vector3(459, 0, -152);
     //Event
     public UnityEvent _eventUpdatePnj;
     public UnityEvent _eventPnjInResume;
@@ -102,7 +104,7 @@ public class GameManager : MonoBehaviour
         _SecondForBirthCounter += Time.deltaTime;
         if  (_SecondForBirthCounter >= _numberSecondForABirth) //Create a wanderer each X seconds
         {
-            Instantiate(wanderer, centrePoint);
+            Instantiate(wanderer, _positionSpawn, Quaternion.identity);
             numberOfPnj++;
             _SecondForBirthCounter = 0f;
         }

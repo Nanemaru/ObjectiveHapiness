@@ -14,16 +14,16 @@ public class Character : MonoBehaviour
     public string job = "wanderer";
     public int age = 0;
     public NavMeshAgent agent;
-    private Transform _homePosition;
+    public Transform _homePosition;
     private int _ageOfDeath;
     public int resourcesToGive = 0;
 
     public string newJob;
-    //Character state
-    public bool hunger = false;
+    //Character stat
     private bool _tired = false;
     private bool _home = false;
     public bool goingToSchool = false;
+    private bool isLearning = false;
     //Value for mouvement
     private Vector3 _destinationWhenResume;
     public float range;
@@ -104,13 +104,13 @@ public class Character : MonoBehaviour
         switch (job)
         {
             case "farmer":
-                SetADestination(_gameManager.bush);
+                SetADestination(GameObject.FindGameObjectWithTag("farmer").transform);
                 break;
             case "lumberjack":
-                SetADestination(_gameManager.forest);
+                SetADestination(GameObject.FindGameObjectWithTag("lumberjack").transform);
                 break;
             case "miner":
-                SetADestination(_gameManager.mine);
+                SetADestination(GameObject.FindGameObjectWithTag("miner").transform);
                 break;
             case "mason":
             case "wanderer":
@@ -142,17 +142,30 @@ public class Character : MonoBehaviour
         {
             case "wanderer":
                 break;
-            case "farmer" when other.CompareTag(job):
+            case "farmer" when Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z):
                 resourcesToGive += 3 * _gameManager.foodMultiplicator;
                 break;
             default:
             { 
-                if (other.CompareTag(job)) resourcesToGive += 3;
+                if (Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z)) resourcesToGive += 3;
                 break;
             }
         }
-        if (job != "wanderer" && other.transform == _homePosition) StartCoroutine(PnjSleeping());
-        else if (other.transform == _gameManager.school) StartCoroutine(PnjLearning());
+        if (job != "wanderer" && other.transform == _homePosition)
+        {
+            StartCoroutine(PnjSleeping());
+        }
+        else if (other.transform == _gameManager.school && !isLearning && goingToSchool)
+        {
+            isLearning = true;
+            goingToSchool = false;
+            StartCoroutine(PnjLearning());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform == _gameManager.school && isLearning) isLearning = false;
     }
 
     private void ChangePnjAppearance()
