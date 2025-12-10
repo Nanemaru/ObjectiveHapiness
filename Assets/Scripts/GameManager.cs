@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public bool IsOnPlay
     {
         get => _isOnPlay;
-        set => _isOnPlay = value;
+        private set => _isOnPlay = value;
     }
     
     //Define how much resource there is in game
@@ -93,10 +93,9 @@ public class GameManager : MonoBehaviour
         if (prosperity >= 100) WinGame();
     }
 
-    public void Resume() //Put game from play to resume and vice versa
+    public void Resume(bool resume) //Put game from play to resume and vice versa
     {
-        _isOnPlay = !_isOnPlay;
-        //Change sprite
+        IsOnPlay = resume;
         _eventPnjInResume.Invoke();
     }
 
