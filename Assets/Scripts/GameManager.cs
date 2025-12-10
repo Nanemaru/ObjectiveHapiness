@@ -93,9 +93,9 @@ public class GameManager : MonoBehaviour
         if (prosperity >= 100) WinGame();
     }
 
-    public void Resume(bool resume) //Put game from play to resume and vice versa
+    public void Resume() //Put game from play to resume and vice versa
     {
-        IsOnPlay = resume;
+        IsOnPlay = !IsOnPlay;
         _eventPnjInResume.Invoke();
     }
 

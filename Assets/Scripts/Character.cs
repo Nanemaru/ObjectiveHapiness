@@ -226,7 +226,7 @@ public class Character : MonoBehaviour
     
     private void PutPnjInResume()
     {
-        agent.isStopped = _gameManager.IsOnPlay;
+        agent.isStopped = !_gameManager.IsOnPlay;
     }
     
     private void UpdateResources()
