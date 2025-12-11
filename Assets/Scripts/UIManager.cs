@@ -13,17 +13,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] Slider sliderProsperity;
     
     [SerializeField] GameManager _gameManager;
+    
+    //Pop-up
+    public VerticalLayoutGroup verticalLayoutGroup;
+    public GameObject newPnj;
+    public GameObject deadPnj;
     // Start is called before the first frame update
     void Start()
     {
         UpdateResourceText();
         UpdateDayCounter();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void UpdateResourceText()
@@ -42,4 +41,11 @@ public class UIManager : MonoBehaviour
     {
         sliderProsperity.value = value/100;
     }
+    
+    public void NewPopUp(GameObject popUp)
+    {
+        GameObject newPopUp = Instantiate(popUp, verticalLayoutGroup.transform);
+        Destroy(newPopUp, 2f);
+    }
+ 
 }

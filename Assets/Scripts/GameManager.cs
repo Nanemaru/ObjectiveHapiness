@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private float _numberSecondOfDay = 0f;
     public int numberDay = 1;
     private bool _isOnPlay = true; //Value to use to put game in resume
-    private float _numberSecondForABirth = 60f;
+    private float _numberSecondForABirth = 61f;
     private float _SecondForBirthCounter;
     public bool IsOnPlay
     {
@@ -68,11 +68,13 @@ public class GameManager : MonoBehaviour
 
     private void WinGame() //Function call when prosperity reach 100%
     {
+        Resume();
         win.SetActive(true);
     }
     
     public  void LoseGame() //Function call when all pnj are dead
     {
+        Resume();
         lose.SetActive(true);
     }
 
@@ -107,6 +109,7 @@ public class GameManager : MonoBehaviour
             Instantiate(wanderer, _positionSpawn, Quaternion.identity);
             numberOfPnj++;
             _SecondForBirthCounter = 0f;
+            uiManager.NewPopUp(uiManager.newPnj);
         }
         if (_numberSecondOfDay > _dayDuration) NextDay();
     }

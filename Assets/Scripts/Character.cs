@@ -217,6 +217,8 @@ public class Character : MonoBehaviour
         _gameManager.numberOfPnj--;
         if (_gameManager.numberOfPnj <= 0) _gameManager.LoseGame();
         if (job == "mason") _gameManager._numberMason--;
+        UIManager uiManager = FindObjectOfType<UIManager>();
+        uiManager.NewPopUp(uiManager.deadPnj);
         Destroy(gameObject);
     }
     
