@@ -10,6 +10,8 @@ public class BuildingPlacer : MonoBehaviour
     public Material validMat;
     public Material invalidMat;
 
+    [SerializeField] ClickCheckBuilding interaction;
+
     private GameObject preview;
     private Building buildingData;
     private bool isPlacing = false;
@@ -50,6 +52,7 @@ public class BuildingPlacer : MonoBehaviour
     // Make building's ghost follow mouse
     private void FollowMouse()
     {
+        interaction.buildButton.interactable=false;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
@@ -58,6 +61,7 @@ public class BuildingPlacer : MonoBehaviour
             {
                 Destroy(preview);
                 isPlacing = false;
+                interaction.buildButton.interactable = true;
             }
             preview.transform.position = hit.point;
 
@@ -95,5 +99,6 @@ public class BuildingPlacer : MonoBehaviour
         gameManager._numberStone -= buildingData.cost[1];
         UI.UpdateResourceText();
         buildingData.UpdateBuildEffect();
+        interaction.buildButton.interactable = false;
     }
 }
