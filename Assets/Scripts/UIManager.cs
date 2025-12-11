@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    //Canvas
     [SerializeField] TextMeshProUGUI textFood;
     [SerializeField] TextMeshProUGUI textWood;
     [SerializeField] TextMeshProUGUI textStone;
@@ -24,7 +25,7 @@ public class UIManager : MonoBehaviour
     {
         UpdateResourceText();
         UpdateDayCounter();
-        UpdatePNJCounter();
+        UpdatePnjCounter();
     }
 
     public void UpdateResourceText()
@@ -39,7 +40,7 @@ public class UIManager : MonoBehaviour
         dayCounter.text = "Day " + _gameManager.numberDay;
     }
 
-    public void UpdatePNJCounter()
+    public void UpdatePnjCounter()
     {
         pnjCounter.text = "Citizen: " + _gameManager.numberOfPnj;
     }
@@ -49,7 +50,7 @@ public class UIManager : MonoBehaviour
         sliderProsperity.value = value/100;
     }
     
-    public void NewPopUp(GameObject popUp)
+    public void NewPopUp(GameObject popUp) //Pop-up when a pnj is born or dies
     {
         GameObject newPopUp = Instantiate(popUp, verticalLayoutGroup.transform);
         Destroy(newPopUp, 2f);

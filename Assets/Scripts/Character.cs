@@ -71,7 +71,6 @@ public class Character : MonoBehaviour
 
     private void CheckIfPnjStillAlive()
     {
-        //gameObject.transform.GetChild(0).position = gameObject.transform.position;
         UpdateResources();
         age++;
         if (age >= _ageOfDeath)
@@ -139,7 +138,7 @@ public class Character : MonoBehaviour
         agent.SetDestination(destination);
     }
 
-    private void OnTriggerEnter(Collider other) //Check if pnj are in their workzone or home
+    private void OnTriggerEnter(Collider other) //Check if pnj are in their workzone or home or school
     {
         switch (job)
         {
@@ -204,13 +203,10 @@ public class Character : MonoBehaviour
 
     private void GiveTheNewAppearance(GameObject[] jobPrefab)
     {
-        GameObject OldAppearance = this.transform.GetChild(0).gameObject;
-        Quaternion Rotation = OldAppearance.transform.rotation;
-        Rotation.y += 180;
+        GameObject OldAppearance = transform.GetChild(0).gameObject;
         Destroy(OldAppearance);
-        GameObject newAppearance = Instantiate(jobPrefab[Random.Range(0, jobPrefab.Length)], this.transform, true);
-        newAppearance.transform.position = this.transform.position;
-        newAppearance.transform.rotation = Rotation;
+        GameObject newAppearance = Instantiate(jobPrefab[Random.Range(0, jobPrefab.Length)], transform, true);
+        newAppearance.transform.position = transform.position;
     }
     
 

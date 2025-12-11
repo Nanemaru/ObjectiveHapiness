@@ -15,7 +15,7 @@ public class MouseNavigation : MonoBehaviour
     void Update()
     {
         //When mouse reach a border of the screen, call MoveCamera function with the vector of the direction
-        if (!_characterClickUI.jobUI.activeSelf)
+        if (!_characterClickUI.jobUI.activeSelf) //To avoid camera moving when player choose a new job for a pnj
         {
             if (Input.mousePosition.y >= Screen.height * 0.95 && transform.position.z <= -125) MoveCamera(Vector3.forward);
             if (Input.mousePosition.y <= Screen.height * 0.05 && transform.position.z >= -200) MoveCamera(Vector3.back);

@@ -56,13 +56,13 @@ public class BuildingPlacer : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
         {
-            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f) //Move building rotation
             {
                 Vector3 rotation = preview.transform.rotation.eulerAngles;
                 rotation.y += 90 *  Input.GetAxis("Mouse ScrollWheel");
                 preview.transform.rotation =  Quaternion.Euler(rotation);
             }
-            if (Input.GetMouseButtonDown (1))
+            if (Input.GetMouseButtonDown (1)) //Let a user cancel their building construction choice
             {
                 Destroy(preview);
                 isPlacing = false;
