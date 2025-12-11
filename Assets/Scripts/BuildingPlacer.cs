@@ -25,13 +25,6 @@ public class BuildingPlacer : MonoBehaviour
     {
         if (!isPlacing || preview is null)
             return;
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
-            Quaternion Rotation = preview.transform.rotation;
-            Rotation.y += 90;
-            preview.transform.rotation = Rotation;
-        }
         FollowMouse();
  
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -63,19 +56,11 @@ public class BuildingPlacer : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
         {
-            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            if (Input.GetAxis("Mouse ScrollWheel") != 0f)
             {
-                Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
-                Quaternion Rotation = preview.transform.rotation;
-                Rotation.y += 90;
-                preview.transform.rotation = Rotation;
-            }
-            if (Input.GetAxis("Mouse ScrollWheel") < 0)
-            {
-                Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
-                Quaternion Rotation = preview.transform.rotation;
-                Rotation.y -= 90;
-                preview.transform.rotation = Rotation;
+                Vector3 rotation = preview.transform.rotation.eulerAngles;
+                rotation.y += 90 *  Input.GetAxis("Mouse ScrollWheel");
+                preview.transform.rotation =  Quaternion.Euler(rotation);
             }
             if (Input.GetMouseButtonDown (1))
             {
