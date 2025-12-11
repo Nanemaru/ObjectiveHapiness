@@ -57,6 +57,17 @@ public class BuildingPlacer : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
         {
+            if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+                Quaternion Rotation = preview.transform.rotation;
+                Rotation.y += 90;
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                Quaternion Rotation = preview.transform.rotation;
+                Rotation.y -= 90;
+            }
             if (Input.GetMouseButtonDown (1))
             {
                 Destroy(preview);
