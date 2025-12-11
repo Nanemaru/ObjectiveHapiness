@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private float _numberSecondOfDay = 0f;
     public int numberDay = 1;
     private bool _isOnPlay = true; //Value to use to put game in resume
-    private float _numberSecondForABirth = 30f;
+    private float _numberSecondForABirth = 60f;
     private float _SecondForBirthCounter;
     public bool IsOnPlay
     {
@@ -51,6 +51,10 @@ public class GameManager : MonoBehaviour
     public Transform forest;
     public Transform mine;
     public Transform centrePoint;
+
+    //UI Endgame
+    public GameObject win;
+    public GameObject lose;
     
     [SerializeField] private UIManager uiManager;
     /*void Start()
@@ -68,12 +72,12 @@ public class GameManager : MonoBehaviour
 
     private void WinGame() //Function call when prosperity reach 100%
     {
-        
+        win.SetActive(true);
     }
     
     public  void LoseGame() //Function call when all pnj are dead
     {
-        Debug.Log("LoseGame");
+        lose.SetActive(true);
     }
 
     private void NextDay() //Function call to pass to next day

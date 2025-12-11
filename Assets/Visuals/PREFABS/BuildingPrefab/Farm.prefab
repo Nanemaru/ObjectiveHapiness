@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: Farm
-  cost: 050000000200000002000000
+  cost: 0f0000000700000002000000
 --- !u!65 &-5724002660151478160
 BoxCollider:
   m_ObjectHideFlags: 0
