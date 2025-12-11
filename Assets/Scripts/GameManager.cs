@@ -53,10 +53,8 @@ public class GameManager : MonoBehaviour
     public GameObject lose;
     
     [SerializeField] private UIManager uiManager;
-    /*void Start()
-    {
-       UpdateDayCounter(); //Put text in unity directly so it doesn't need to be call at start
-    }*/
+    
+    public Transform tranformOfWorkinAssetTarget;
 
     void Update()
     {

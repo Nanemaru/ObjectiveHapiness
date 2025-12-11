@@ -19,6 +19,8 @@ public class Character : MonoBehaviour
     public int resourcesToGive = 0;
 
     public string newJob;
+
+    [SerializeField] private GameObject isWorkingAsset;
     //Character stat
     private bool _tired = false;
     private bool _home = false;
@@ -61,7 +63,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void SetADestination(GameObject[] objects)
+    private void SetADestination(GameObject[] objects)
     {
         int arrayIndex = Random.Range(0, objects.Length);
         agent.SetDestination(objects[arrayIndex].transform.position);
@@ -69,6 +71,7 @@ public class Character : MonoBehaviour
 
     private void CheckIfPnjStillAlive()
     {
+        //gameObject.transform.GetChild(0).position = gameObject.transform.position;
         UpdateResources();
         age++;
         if (age >= _ageOfDeath)
@@ -144,14 +147,19 @@ public class Character : MonoBehaviour
                 break;
             case "farmer" when Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z):
                 resourcesToGive += 2 * _gameManager.foodMultiplicator;
+                WorkingAsset(true);
                 break;
             default:
-            { 
-                if (Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z)) resourcesToGive += 3;
+            {
+                if (Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z))
+                {
+                    resourcesToGive += 3;
+                    WorkingAsset(true);
+                }
                 break;
             }
         }
-        if (job != "wanderer" && other.transform == _homePosition)
+        if (job != "wanderer" && _home && other.transform == _homePosition.transform)
         {
             StartCoroutine(PnjSleeping());
         }
@@ -163,9 +171,16 @@ public class Character : MonoBehaviour
         }
     }
 
+    private void WorkingAsset(bool enabledState)
+    {
+        isWorkingAsset.SetActive(enabled);
+        isWorkingAsset.transform.LookAt(_gameManager.tranformOfWorkinAssetTarget);
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.transform == _gameManager.school && isLearning) isLearning = false;
+        if (isWorkingAsset.activeSelf) WorkingAsset(false);
     }
 
     private void ChangePnjAppearance()
