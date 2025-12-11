@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chara-F_bois
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6d99f997d2adaf943a0b32f529056ea9, type: 3}
+      propertyPath: m_TagString
+      value: Character
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

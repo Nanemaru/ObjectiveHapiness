@@ -71,7 +71,7 @@ public class Character : MonoBehaviour
     {
         UpdateResources();
         age++;
-        if (age == _ageOfDeath)
+        if (age >= _ageOfDeath)
         {
             if (_home) gameObject.GetComponent<HomeClass>().NumberBedLeft++;
             KillPnj();

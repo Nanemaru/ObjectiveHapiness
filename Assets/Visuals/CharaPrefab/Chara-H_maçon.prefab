@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Chara-H_ma\xE7on"
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f68e08629e1f76942a58b2e88f250687, type: 3}
+      propertyPath: m_TagString
+      value: Character
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

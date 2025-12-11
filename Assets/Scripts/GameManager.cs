@@ -80,8 +80,8 @@ public class GameManager : MonoBehaviour
 
     private void NextDay() //Function call to pass to next day
     {
-        _numberSecondOfDay = 0f;
         numberDay++;
+        _numberSecondOfDay = 0f;
         _eventUpdatePnj.Invoke();
         uiManager.UpdateResourceText();
         uiManager.UpdateDayCounter();
