@@ -84,6 +84,7 @@ public class Character : MonoBehaviour
 
     private void PnjTired() //Function when Pnj is Tired
     {
+        if (isWorkingAsset.activeSelf) WorkingAsset(false);
         if (job == "wanderer") return;
         else _tired = true;
         float prosperityToAdd;
@@ -172,14 +173,13 @@ public class Character : MonoBehaviour
 
     private void WorkingAsset(bool enabledState)
     {
-        isWorkingAsset.SetActive(enabled);
+        isWorkingAsset.SetActive(enabledState);
         isWorkingAsset.transform.LookAt(_gameManager.tranformOfWorkinAssetTarget);
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.transform == _gameManager.school && isLearning) isLearning = false;
-        if (isWorkingAsset.activeSelf) WorkingAsset(false);
     }
 
     private void ChangePnjAppearance()
