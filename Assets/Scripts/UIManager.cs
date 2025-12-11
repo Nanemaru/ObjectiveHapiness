@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI textWood;
     [SerializeField] TextMeshProUGUI textStone;
     [SerializeField] TextMeshProUGUI dayCounter;
+    [SerializeField] TextMeshProUGUI pnjCounter;
     [SerializeField] Slider sliderProsperity;
     
     [SerializeField] GameManager _gameManager;
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour
     {
         UpdateResourceText();
         UpdateDayCounter();
+        UpdatePNJCounter();
     }
 
     public void UpdateResourceText()
@@ -35,6 +37,11 @@ public class UIManager : MonoBehaviour
     public void UpdateDayCounter()
     {
         dayCounter.text = "Day " + _gameManager.numberDay;
+    }
+
+    public void UpdatePNJCounter()
+    {
+        pnjCounter.text = "Citizen: " + _gameManager.numberOfPnj;
     }
 
     public void UpdateSliderProsperity(float value)
