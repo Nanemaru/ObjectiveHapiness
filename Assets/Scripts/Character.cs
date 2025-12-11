@@ -142,7 +142,7 @@ public class Character : MonoBehaviour
             case "wanderer":
                 break;
             case "farmer" when Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z):
-                resourcesToGive += 1 * _gameManager.foodMultiplicator;
+                resourcesToGive += 2 * _gameManager.foodMultiplicator;
                 break;
             default:
             { 
