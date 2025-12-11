@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(wanderer, _positionSpawn, Quaternion.identity);
             numberOfPnj++;
+            uiManager.UpdatePNJCounter();
             _SecondForBirthCounter = 0f;
             uiManager.NewPopUp(uiManager.newPnj);
         }
