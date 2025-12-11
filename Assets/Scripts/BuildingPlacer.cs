@@ -25,7 +25,13 @@ public class BuildingPlacer : MonoBehaviour
     {
         if (!isPlacing || preview is null)
             return;
-
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+            Quaternion Rotation = preview.transform.rotation;
+            Rotation.y += 90;
+            preview.transform.rotation = Rotation;
+        }
         FollowMouse();
  
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -62,11 +68,14 @@ public class BuildingPlacer : MonoBehaviour
                 Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
                 Quaternion Rotation = preview.transform.rotation;
                 Rotation.y += 90;
+                preview.transform.rotation = Rotation;
             }
             if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
+                Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
                 Quaternion Rotation = preview.transform.rotation;
                 Rotation.y -= 90;
+                preview.transform.rotation = Rotation;
             }
             if (Input.GetMouseButtonDown (1))
             {
