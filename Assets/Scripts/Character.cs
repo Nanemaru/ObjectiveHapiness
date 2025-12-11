@@ -61,9 +61,10 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void SetADestination(Transform destination)
+    public void SetADestination(GameObject[] objects)
     {
-        agent.SetDestination(destination.position);
+        int arrayIndex = Random.Range(0, objects.Length);
+        agent.SetDestination(objects[arrayIndex].transform.position);
     }
 
     private void CheckIfPnjStillAlive()
@@ -103,13 +104,13 @@ public class Character : MonoBehaviour
         switch (job)
         {
             case "farmer":
-                SetADestination(GameObject.FindGameObjectWithTag("farmer").transform);
+                SetADestination(GameObject.FindGameObjectsWithTag("farmer"));
                 break;
             case "lumberjack":
-                SetADestination(GameObject.FindGameObjectWithTag("lumberjack").transform);
+                SetADestination(GameObject.FindGameObjectsWithTag("lumberjack"));
                 break;
             case "miner":
-                SetADestination(GameObject.FindGameObjectWithTag("miner").transform);
+                SetADestination(GameObject.FindGameObjectsWithTag("miner"));
                 break;
             case "mason":
             case "wanderer":

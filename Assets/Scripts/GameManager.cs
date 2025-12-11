@@ -46,10 +46,6 @@ public class GameManager : MonoBehaviour
     public Transform school;
     public bool _isSchoolCreate = false;
     
-    //Work Zone
-    public Transform bush;
-    public Transform forest;
-    public Transform mine;
     public Transform centrePoint;
 
     //UI Endgame

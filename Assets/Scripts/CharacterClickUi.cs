@@ -59,7 +59,7 @@ public class CharacterClickUI : MonoBehaviour
     {
         _scriptCharacter.newJob =  newWork;
         _scriptCharacter.goingToSchool = true;
-        _scriptCharacter.SetADestination(_gameManager.school);
+        _scriptCharacter.agent.destination = _gameManager.school.position;
         jobUI.SetActive(false);
     }
 }
