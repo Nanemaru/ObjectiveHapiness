@@ -88,15 +88,14 @@ public class Character : MonoBehaviour
         if (_home)
         {
             agent.SetDestination(_homePosition.position);
-            prosperityToAdd = 2f;
             _tired = false;
         }
         else //If pnj doesn't find a home they wander until it find a home available
         {
             prosperityToAdd = -3f;
             MakePnjWander();
+            _gameManager.UpdateProsperity(prosperityToAdd);
         }
-        _gameManager.UpdateProsperity(prosperityToAdd);
     }
 
     private void SetupAgent() //Give A destination to pnj based on their job
@@ -143,7 +142,7 @@ public class Character : MonoBehaviour
             case "wanderer":
                 break;
             case "farmer" when Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z):
-                resourcesToGive += 3 * _gameManager.foodMultiplicator;
+                resourcesToGive += 1 * _gameManager.foodMultiplicator;
                 break;
             default:
             { 

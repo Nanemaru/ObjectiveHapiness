@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -53,6 +54,11 @@ public class BuildingPlacer : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, groundMask))
         {
+            if (Input.GetMouseButtonDown (1))
+            {
+                Destroy(preview);
+                isPlacing = false;
+            }
             preview.transform.position = hit.point;
 
             //Check collider

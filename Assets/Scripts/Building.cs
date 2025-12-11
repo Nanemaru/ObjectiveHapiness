@@ -22,11 +22,11 @@ public class Building : MonoBehaviour
                 _gameManager.foodMultiplicator += 1;
                 break;
             case "Library":
-                prosperityToAdd = 5;
+                prosperityToAdd = 10;
                 _gameManager.UpdateProsperity(prosperityToAdd);
                 break;
             case "Museum":
-                prosperityToAdd = 10;
+                prosperityToAdd = 20;
                 _gameManager.UpdateProsperity(prosperityToAdd);
                 break;
             case "School":
