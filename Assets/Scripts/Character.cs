@@ -158,7 +158,7 @@ public class Character : MonoBehaviour
                 break;
             }
         }
-        if (job != "wanderer" && _home && other.transform == _homePosition.transform)
+        if (job != "wanderer" && _home && Mathf.Approximately(other.transform.position.x, _homePosition.transform.position.x) && Mathf.Approximately(other.transform.position.z, _homePosition.transform.position.z))
         {
             StartCoroutine(PnjSleeping());
         }
