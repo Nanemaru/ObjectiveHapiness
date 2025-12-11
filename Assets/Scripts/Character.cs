@@ -14,7 +14,7 @@ public class Character : MonoBehaviour
     public string job = "wanderer";
     public int age = 0;
     public NavMeshAgent agent;
-    public Transform _homePosition;
+    public HomeClass _homePosition;
     private int _ageOfDeath;
     public int resourcesToGive = 0;
 
@@ -54,7 +54,7 @@ public class Character : MonoBehaviour
             {
                 home.NumberBedLeft--;
                 _home = true;
-                _homePosition = home.transform;
+                _homePosition = home;
                 if (home.NumberBedLeft == 0) home.IsAvailable = false;
                 break;
             }
@@ -73,7 +73,7 @@ public class Character : MonoBehaviour
         age++;
         if (age >= _ageOfDeath)
         {
-            if (_home) gameObject.GetComponent<HomeClass>().NumberBedLeft++;
+            if (_home) _homePosition.NumberBedLeft++;
             KillPnj();
         }
         FeedPnj();
@@ -88,7 +88,7 @@ public class Character : MonoBehaviour
         if (!_home) CheckAHomeAvailable();
         if (_home)
         {
-            agent.SetDestination(_homePosition.position);
+            agent.SetDestination(_homePosition.transform.position);
             _tired = false;
         }
         else //If pnj doesn't find a home they wander until it find a home available
