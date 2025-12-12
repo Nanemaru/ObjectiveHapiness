@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     //Event
     public UnityEvent _eventUpdatePnj;
     public UnityEvent _eventPnjInResume;
+    public UnityEvent _eventUpdateBuildButton;
+    public UnityEvent _eventBuildButtonDisable;
     
     //Buildings
     public List<HomeClass> homes = new List<HomeClass>();

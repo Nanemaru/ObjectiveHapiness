@@ -43,7 +43,7 @@ public class Character : MonoBehaviour
     {
         if (agent.remainingDistance <= agent.stoppingDistance && !goingToSchool) //Make pnj wander as long as they're tired, wanderer, and not going to school
         {
-            if (job == "wanderer") MakePnjWander();
+            if (job == "wanderer" || job == "mason") MakePnjWander();
             else if (_tired) CheckAHomeAvailable();
         }
     }
@@ -71,6 +71,7 @@ public class Character : MonoBehaviour
 
     private void CheckIfPnjStillAlive()
     {
+        if (isWorkingAsset.activeSelf) WorkingAsset(false);
         UpdateResources();
         age++;
         if (age >= _ageOfDeath)
@@ -84,7 +85,6 @@ public class Character : MonoBehaviour
 
     private void PnjTired() //Function when Pnj is Tired
     {
-        if (isWorkingAsset.activeSelf) WorkingAsset(false);
         if (job == "wanderer") return;
         else _tired = true;
         float prosperityToAdd;
@@ -145,13 +145,13 @@ public class Character : MonoBehaviour
         {
             case "wanderer":
                 break;
-            case "farmer" when Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z):
+            case "farmer" when Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z) && !goingToSchool:
                 resourcesToGive += 2 * _gameManager.foodMultiplicator;
                 WorkingAsset(true);
                 break;
             default:
             {
-                if (Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z))
+                if (Mathf.Approximately(agent.destination.x, other.gameObject.transform.position.x) && Mathf.Approximately(agent.destination.z, other.gameObject.transform.position.z) && !goingToSchool)
                 {
                     resourcesToGive += 3;
                     WorkingAsset(true);

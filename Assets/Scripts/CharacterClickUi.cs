@@ -48,7 +48,7 @@ public class CharacterClickUI : MonoBehaviour
                 if (child.GetComponent<Button>())
                 {
                     Button button = child.GetComponent<Button>();
-                    button.interactable = child.gameObject.name != work;
+                    button.interactable = child.gameObject.name != work + "Button";
                 }
             }
         }
