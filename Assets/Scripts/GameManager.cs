@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,7 +11,8 @@ public class GameManager : MonoBehaviour
     public int numberDay = 1;
     private bool _isOnPlay = true; //Value to use to put game in resume
     private float _numberSecondForABirth = 61f;
-    private float _SecondForBirthCounter;
+    private float _secondForBirthCounter;
+    public int actualTimeScale;
     public bool IsOnPlay
     {
         get => _isOnPlay;
@@ -41,7 +43,8 @@ public class GameManager : MonoBehaviour
     public UnityEvent _eventPnjInResume;
     public UnityEvent _eventUpdateBuildButton;
     public UnityEvent _eventBuildButtonDisable;
-    
+
+    public UnityEvent _eventUpdateTimeScale;
     //Buildings
     public List<HomeClass> homes = new List<HomeClass>();
 
@@ -57,6 +60,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager uiManager;
     
     public Transform tranformOfWorkinAssetTarget;
+
+    private void Awake()
+    {
+        actualTimeScale = 1;
+    }
 
     void Update()
     {
@@ -102,17 +110,25 @@ public class GameManager : MonoBehaviour
 
     private void UpdateTimeAndDay()
     {
-        _numberSecondOfDay  += Time.deltaTime;
-        _SecondForBirthCounter += Time.deltaTime;
-        if  (_SecondForBirthCounter >= _numberSecondForABirth) //Create a wanderer each X seconds
+        float deltaTime = Time.deltaTime *  actualTimeScale;
+        _numberSecondOfDay  += deltaTime;
+        _secondForBirthCounter += deltaTime;
+        if  (_secondForBirthCounter >= _numberSecondForABirth) //Create a wanderer each X seconds
         {
             Instantiate(wanderer, _positionSpawn, Quaternion.identity);
             numberOfPnj++;
             uiManager.UpdatePnjCounter();
-            _SecondForBirthCounter = 0f;
+            _secondForBirthCounter = 0f;
             uiManager.NewPopUp(uiManager.newPnj);
         }
         if (_numberSecondOfDay > _dayDuration) NextDay();
+    }
+
+    public void ChangeTimeScale()
+    {
+        actualTimeScale++;
+        if (actualTimeScale > 3) actualTimeScale = 1;
+        _eventUpdateTimeScale.Invoke();
     }
     
 }

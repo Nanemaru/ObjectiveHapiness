@@ -17,7 +17,7 @@ public class Character : MonoBehaviour
     public HomeClass _homePosition;
     private int _ageOfDeath;
     public int resourcesToGive = 0;
-
+    public int speed = 3;
     public string newJob;
 
     [SerializeField] private GameObject isWorkingAsset;
@@ -29,6 +29,8 @@ public class Character : MonoBehaviour
     //Value for mouvement
     private Vector3 _destinationWhenResume;
     public float range;
+
+    private readonly int _waitForCoroutine = 6;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -36,6 +38,7 @@ public class Character : MonoBehaviour
         _gameManager = FindObjectOfType<GameManager>();
         _gameManager._eventUpdatePnj.AddListener(CheckIfPnjStillAlive);
         _gameManager._eventPnjInResume.AddListener(PutPnjInResume);
+        _gameManager._eventUpdateTimeScale.AddListener(UpdateSpeed);
         CheckAHomeAvailable();
         SetupAgent();
     }
@@ -235,13 +238,13 @@ public class Character : MonoBehaviour
     
     IEnumerator PnjSleeping() //Coroutine to let Pnj sleep before return to work, also use when pnj is in school for professional retraining
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(_waitForCoroutine/ _gameManager.actualTimeScale);
         _tired = false;
         SetupAgent();
     }
     IEnumerator PnjLearning() //Coroutine to let pnj being in school for professional retraining
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(_waitForCoroutine/ _gameManager.actualTimeScale);
         job = newJob;
         newJob = String.Empty;
         ChangePnjAppearance();
@@ -270,5 +273,10 @@ public class Character : MonoBehaviour
                 break;
         }
         resourcesToGive = 0;
+    }
+
+    private void UpdateSpeed()
+    {
+        agent.speed = speed * _gameManager.actualTimeScale;
     }
 }
